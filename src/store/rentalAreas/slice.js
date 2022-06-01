@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = { allRentalAreas: [], areaDetails: null, loading: true };
 
 export const areaSlice = createSlice({
-  name: "rentalArea",
+  name: "rentalAreas",
   initialState,
   reducers: {
     startLoading: (state) => {
