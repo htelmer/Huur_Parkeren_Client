@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllAreas } from "../../store/rentalAreas/actions";
 import AreaCard from "../../components/AreaCard";
 import { selectAreas } from "../../store/rentalAreas/selectors";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 export default function Home() {
   const dispatch = useDispatch();
-  //const areas = useSelector(selectAreas);
-  // console.log("selectors", areas);
+  const areas = useSelector(selectAreas);
+  console.log("selectors", areas);
 
   useEffect(() => {
     dispatch(fetchAllAreas);
@@ -17,7 +19,7 @@ export default function Home() {
     <div>
       <h1>Areas</h1>
       <p>
-        {/*areas.map((s) => (
+        {areas.map((s) => (
           <AreaCard
             key={s.id}
             id={s.id}
@@ -29,7 +31,7 @@ export default function Home() {
             image={s.image}
             favorites={s.favorites}
           />
-        ))*/}
+        ))}
       </p>
     </div>
   );

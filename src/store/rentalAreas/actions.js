@@ -21,15 +21,18 @@ export async function fetchAllAreas(dispatch, getState) {
     console.log(e.message);
   }
 }
-export const fetchAreaById = (id) => {
-  return async (dispatch, getState) => {
-    try {
-      const response = await axios.get(`${apiUrl}/area/${id}`);
-      console.log("detail", response);
-      console.log(response);
-      dispatch(areaDetailsFetched(response.data));
-    } catch (e) {
-      console.log(e);
-    }
-  };
+export const fetchAreaById = (id) => async (dispatch, getState) => {
+  try {
+    console.log("id in the thunk", id);
+    dispatch(startLoading());
+    console.log("startLoading", startLoading);
+    const response = await axios.get(`${apiUrl}/area/${id}`);
+    console.log("detail", response);
+    console.log(response);
+    dispatch(areaDetailsFetched(response.data));
+    console.log("details fetched?", areaDetailsFetched(response.data));
+    dispatch(appDoneLoading());
+  } catch (e) {
+    console.log(e);
+  }
 };

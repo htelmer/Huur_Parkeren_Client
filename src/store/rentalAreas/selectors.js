@@ -1,6 +1,4 @@
-export const selectAreas = (reduxState) =>
-  reduxState.rentalAreas.allRentalAreas;
-//console.log("selector??", getAreas);
-export const getLoading = (reduxState) => reduxState.rentalAreas.loading;
-export const selectAreaDetails = (reduxState) =>
-  reduxState.rentalAreas.areaDetails;
+export const selectAreas = (reduxState) => reduxState.area.allRentalAreas;
+//console.log("selector??", selectAreas);
+export const getLoading = (reduxState) => reduxState.area.loading;
+export const selectAreaDetails = (reduxState) => reduxState.area.areaDetails;

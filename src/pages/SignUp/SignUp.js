@@ -100,6 +100,9 @@ export default function SignUp() {
         </Form.Group>
         <Link to="/login">Click here to log in</Link>
       </Form>
+      <Link to="/login" style={{ textAlign: "center" }}>
+        Already have a HuurParkeren Account? Please Login
+      </Link>
     </Container>
   );
 }
