@@ -10,6 +10,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectAppLoading } from "./store/appState/selectors";
 import { getUserWithStoredToken } from "./store/user/actions";
 import AreaDetails from "./pages/DetailPage";
+import MyAccount from "./pages/MyAccount";
+import SavedAreas from "./pages/SavedParkingAreas";
+import NewParkingArea from "./pages/NewParkingArea";
+import MyParkingArea from "./pages/MyParkingArea";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +31,10 @@ function App() {
         <Route exact path="/area/:id" element={<AreaDetails />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/myAccount" element={<MyAccount />} />
+        <Route path="/MyAccount/SavedAreas" element={<SavedAreas />} />
+        <Route path="/MyAccount/NewParkingArea" element={<NewParkingArea />} />
+        <Route path="/MyAccount/MyParkingArea" element={<MyParkingArea />} />
       </Routes>
     </div>
   );

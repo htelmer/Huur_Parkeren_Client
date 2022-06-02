@@ -118,3 +118,59 @@ export const getUserWithStoredToken = () => {
     }
   };
 };
+export const postNewArea = (newArea) => async (dispatch, getState) => {
+  console.log("newArea", newArea);
+  try {
+    const token = selectToken(getState());
+    console.log("token", token);
+    const {
+      city,
+      postalCode,
+      streetName,
+      houseNo,
+      price,
+      latitude,
+      longtitude,
+      availableStartDate,
+      availableEndDate,
+      availableSpots,
+      description,
+      image,
+    } = newArea;
+    console.log();
+    dispatch(appLoading());
+    const response = await axios.post(
+      `${apiUrl}/area/newArea`,
+      {
+        city,
+        postalCode,
+        streetName,
+        houseNo,
+        price,
+        latitude,
+        longtitude,
+        availableStartDate,
+        availableEndDate,
+        availableSpots,
+        description,
+        image,
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    //dispatch(areaPostedSuccess(response.data));
+    dispatch(
+      showMessageWithTimeout(
+        "success",
+        false,
+        "Artwork is posted successfully!!",
+        1500
+      )
+    );
+    dispatch(appDoneLoading());
+  } catch (error) {
+    console.log(error.message);
+    dispatch(appDoneLoading());
+  }
+};

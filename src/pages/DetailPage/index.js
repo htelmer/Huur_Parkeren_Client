@@ -21,7 +21,7 @@ export default function AreaDetails() {
 
   return (
     <div>
-      {loading || details === null ? (
+      {!details || details === null ? (
         "Loading"
       ) : (
         <div>
@@ -32,7 +32,7 @@ export default function AreaDetails() {
             {details.postalCode} {details.city}
           </h3>
           <p>{details.price}</p>
-          <img href={details.image} />
+          <img alt={details.name} href={details.image} />
 
           <h3>Features:</h3>
           <p>Price: € {details.price}/per mounth</p>
