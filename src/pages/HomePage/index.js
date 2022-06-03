@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllAreas } from "../../store/rentalAreas/actions";
 import AreaCard from "../../components/AreaCard";
 import { selectAreas } from "../../store/rentalAreas/selectors";
-import Calendar from "react-calendar";
+import { Link } from "react-router-dom";
 import "react-calendar/dist/Calendar.css";
 
 export default function Home() {
@@ -17,6 +17,9 @@ export default function Home() {
 
   return (
     <div>
+      <Link to={`/map`}>
+        <button>View Map</button>
+      </Link>
       <h1>Areas</h1>
       <p>
         {areas.map((s) => (

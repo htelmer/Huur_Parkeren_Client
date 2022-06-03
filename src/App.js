@@ -14,6 +14,7 @@ import MyAccount from "./pages/MyAccount";
 import SavedAreas from "./pages/SavedParkingAreas";
 import NewParkingArea from "./pages/NewParkingArea";
 import MyParkingArea from "./pages/MyParkingArea";
+import Map from "./pages/Map";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ function App() {
       {isLoading ? <Loading /> : null}
       <Routes>
         <Route exact path="/" element={<Home />} />
+        <Route exact path="/map" element={<Map />} />
         <Route exact path="/area/:id" element={<AreaDetails />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
