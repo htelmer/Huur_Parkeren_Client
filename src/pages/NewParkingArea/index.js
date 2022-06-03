@@ -1,7 +1,10 @@
 import React from "react";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { postNewArea } from "../../store/user/actions";
+import { cities } from "../../config/cities";
+import { selectCityFilter } from "../../store/filters/selectors";
+
 export default function NewParkingArea() {
   const [city, setCity] = useState("");
   const [postalCode, setPostalCode] = useState("");
@@ -15,8 +18,13 @@ export default function NewParkingArea() {
   const [availableSpots, setAvailableSpots] = useState(1);
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
+  const [value, setValue] = useState([]);
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(selectCityFilter(value));
+  }, [value, dispatch]);
+  const cities = useSelector(selectCityFilter());
 
   const submit = (event) => {
     event.preventDefault();
@@ -49,20 +57,31 @@ export default function NewParkingArea() {
     setImage("");
   };
 
+  /* <p>
+  <label>
+    City:{" "}
+    <input
+      type="string"
+      value={city}
+      onChange={(e) => setCity(e.target.value)}
+    />
+  </label>
+</p>*/
+
   return (
     <div>
       <form onSubmit={submit}>
         <h1>Post Your Parking Area</h1>
-        <p>
-          <label>
-            City:{" "}
-            <input
-              type="string"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-            />
-          </label>
-        </p>
+        <select
+          value={city.target.value}
+          onChange={setValue}
+          style={{ margin: 20 }}
+        >
+          <option value="allHouses">All Houses</option>
+          {cities.map((city) => (
+            <option value={city.id}>{city.name}</option>
+          ))}
+        </select>
         <p>
           <label>
             Postal Code:{" "}

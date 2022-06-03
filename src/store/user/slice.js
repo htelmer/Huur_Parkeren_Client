@@ -24,12 +24,14 @@ export const userSlice = createSlice({
     },
     toggleFavorites: (state, action) => {
       const idToAdd = action.payload;
-      const newFavs = state.profile.favorites.userFavorites.includes(idToAdd)
-        ? state.profile.favorites.userFavorites.filter(
-            (areaId) => areaId !== idToAdd
-          )
-        : [...state.profile.favorites.userFavorites, idToAdd];
-      state.user.profile.favorites.userFavorites = newFavs;
+      console.log("id", idToAdd.areaId);
+      // console.log("state", state.profile?.favorites);
+      const newFavs = state.profile?.favorites?.includes(idToAdd)
+        ? state.profile.favorites.filter((areaId) => areaId !== idToAdd)
+        : [...state.profile.favorites, idToAdd];
+
+      console.log("new favorites", newFavs);
+      state.user.profile.favorites = newFavs;
     },
   },
 });
