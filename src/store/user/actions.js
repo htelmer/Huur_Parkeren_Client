@@ -1,9 +1,11 @@
 import { apiUrl } from "../../config/constants";
 import axios from "axios";
-import { selectToken } from "./selectors";
+import { selectToken, selectUser } from "./selectors";
 import { appLoading, appDoneLoading, setMessage } from "../appState/slice";
 import { showMessageWithTimeout } from "../appState/actions";
 import { loginSuccess, logOut, tokenStillValid } from "./slice";
+import { selectAreaDetails } from "../rentalAreas/selectors";
+import { toggleFavorites } from "../user/slice";
 
 export const signUp = (firstName, lastName, email, password, phone) => {
   return async (dispatch, getState) => {
@@ -173,4 +175,32 @@ export const postNewArea = (newArea) => async (dispatch, getState) => {
     console.log(error.message);
     dispatch(appDoneLoading());
   }
+};
+export const setFavorites = (areaId) => {
+  return async (dispatch, getState) => {
+    try {
+      const {
+        token,
+        profile: { id },
+      } = getState().user;
+      console.log("userId,areaID", id, areaId);
+      const response = await axios.post(
+        `${apiUrl}/area/favorites/`,
+        { userId: id, areaId: areaId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("response", response);
+
+      dispatch(
+        showMessageWithTimeout("success", false, "Favorites Added", 3000)
+      );
+      dispatch(toggleFavorites(response.data));
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
 };

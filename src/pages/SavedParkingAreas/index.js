@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser, selectToken } from "../../store/user/selectors";
 import { selectAreas } from "../../store/rentalAreas/selectors";
-import { getUserWithStoredToken } from "../../store/user/actions";
-import { fetchAllAreas } from "../../store/rentalAreas/actions";
 //import { Link } from "react-router-dom";
 
 export default function SavedAreas() {
@@ -16,10 +14,26 @@ export default function SavedAreas() {
   /*useEffect(() => {
     dispatch(fetchAllAreas());
   }, [dispatch]);*/
+
   return (
     <div>
       <h1>Saved Areas</h1>
-      {token ? <div>{user.profile.favorites.city}</div> : null}
+      {user.favorites
+        ? user.favorites.map((fav) => {
+            return (
+              <div>
+                <h3>
+                  {fav.city} {fav.postalCode}
+                </h3>
+                <p>
+                  {fav.streetName} {fav.houseNo}
+                </p>
+                <img href={fav.image} />
+                <p>{fav.description}</p>
+              </div>
+            );
+          })
+        : "You have not any favorites yet"}
     </div>
   );
 }

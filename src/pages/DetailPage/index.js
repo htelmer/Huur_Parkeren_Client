@@ -7,13 +7,16 @@ import {
   selectAreaDetails,
 } from "../../store/rentalAreas/selectors";
 import { useParams } from "react-router-dom";
-import { selectToken, selectUser } from "../../store/user/selectors";
+import { selectToken, selectFavorites } from "../../store/user/selectors";
+import { setFavorites } from "../../store/user/actions";
 
 export default function AreaDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const loading = useSelector(getLoading);
   const details = useSelector(selectAreaDetails);
+  const favorites = useSelector(selectFavorites);
+  console.log("favorites", favorites);
   console.log("details??", details);
   useEffect(() => {
     dispatch(fetchAreaById(id));
@@ -39,6 +42,13 @@ export default function AreaDetails() {
           <p>{details.description}</p>
           <p>Available spots: {details.availableSpots}</p>
           <button>Send a message</button>
+          <button
+            variant="secondary"
+            style={{ borderRadius: "10px", height: "50px" }}
+            onClick={() => dispatch(setFavorites(details.id))}
+          >
+            Save
+          </button>
         </div>
       )}
     </div>
