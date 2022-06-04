@@ -42,7 +42,7 @@ export default function Map() {
           margin: "0px 19.5%",
         }}
         center={[52.36994, 4.906]}
-        zoom={13}
+        zoom={9}
         scrollWheelZoom={false}
       >
         <TileLayer
