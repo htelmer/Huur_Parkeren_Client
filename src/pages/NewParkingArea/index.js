@@ -4,6 +4,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { postNewArea } from "../../store/user/actions";
 import { filterCities } from "../../store/filters/slice";
 import { selectCityFilter } from "../../store/filters/selectors";
+import Typography from "@mui/material/Typography";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Link from "@mui/material/Link";
+import FormControl from "@mui/material/FormControl";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import InputLabel from "@mui/material/InputLabel";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 
 export default function NewParkingArea() {
   const [city, setCity] = useState("");
@@ -69,135 +78,156 @@ export default function NewParkingArea() {
 
   return (
     <div>
-      <form onSubmit={submit}>
-        <h1>Post Your Parking Area</h1>
-        <label>
-          City:
-          <select
-            name="cities"
-            value={city}
-            onChange={(event) => setCity(event.target.value)}
-          >
-            {allArea.map((area) => (
-              <option value={area.name}>{area.name}</option>
-            ))}
-          </select>
-        </label>
-        <p>
-          <label>
-            Postal Code:{" "}
-            <input
-              type="string"
-              value={postalCode}
-              onChange={(e) => setPostalCode(e.target.value)}
-            />
-          </label>
-        </p>
-        <p>
-          <label>
-            Street Name:{" "}
-            <input
-              type="string"
-              value={streetName}
-              onChange={(e) => setStreetName(e.target.value)}
-            />
-          </label>
-        </p>
-        <p>
-          <label>
-            House Number:{" "}
-            <input
-              type="string"
-              value={houseNo}
-              onChange={(e) => setHouseNo(e.target.value)}
-            />
-          </label>
-        </p>
-        <p>
-          <label>
-            Price: €{""}
-            <input
-              type="number"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-            />
-            /permonth
-          </label>
-        </p>
-        <p>
-          <label>
-            Latitude:
-            <input
-              type="string"
-              value={latitude}
-              onChange={(e) => setLatitude(e.target.value)}
-            />
-          </label>
-        </p>
-        <p>
-          <label>
-            Longtitude:
-            <input
-              type="string"
-              value={longtitude}
-              onChange={(e) => setLongtitude(e.target.value)}
-            />
-          </label>
-        </p>
-        <p>
-          <label>
-            Available Start Date:
-            <input
-              type="date"
-              value={availableStartDate}
-              onChange={(e) => setAvailableStartDate(e.target.value)}
-            />
-          </label>
-        </p>
-        <p>
-          <label>
-            Available End Date:
-            <input
-              type="date"
-              value={availableEndDate}
-              onChange={(e) => setAvailableEndDate(e.target.value)}
-            />
-          </label>
-        </p>
-        <p>
-          <label>
-            Available Spots:
-            <input
-              type="number"
-              value={availableSpots}
-              onChange={(e) => setAvailableSpots(e.target.value)}
-            />
-          </label>
-        </p>
-        <p>
-          <label>
-            Description:
-            <input
-              type="text"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </label>
-        </p>
-        <p>
-          <label>
-            Image:
-            <input
-              type="string"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-            />
-          </label>
-        </p>
-        <p>
-          <button type="submit"> Submit </button>
-        </p>
-      </form>
+      <Breadcrumbs aria-label="breadcrumb">
+        <Link underline="hover" color="inherit" href="/">
+          Home
+        </Link>
+        <Link underline="hover" color="inherit" href="/myAccount">
+          My Account
+        </Link>
+
+        <Typography color="text.primary">New Parking Area</Typography>
+      </Breadcrumbs>
+      <div>
+        <form onSubmit={submit}>
+          <Grid align="center">
+            {" "}
+            <h1>Post Your Parking Area</h1>
+          </Grid>
+          <Grid>
+            <Box sx={{ minWidth: 120 }}>
+              <Typography>City: </Typography>
+              <InputLabel id="demo-simple-select-label" required>
+                Select City
+              </InputLabel>
+              <Select
+                label="Select Your City"
+                value={city}
+                onChange={(event) => setCity(event.target.value)}
+              >
+                {allArea.map((area) => (
+                  <MenuItem value={area.name}>{area.name}</MenuItem>
+                ))}
+              </Select>
+            </Box>
+            <p>
+              <label>
+                Postal Code:{" "}
+                <input
+                  type="string"
+                  value={postalCode}
+                  onChange={(e) => setPostalCode(e.target.value)}
+                />
+              </label>
+            </p>
+
+            <p>
+              <label>
+                Street Name:{" "}
+                <input
+                  type="string"
+                  value={streetName}
+                  onChange={(e) => setStreetName(e.target.value)}
+                />
+              </label>
+            </p>
+            <p>
+              <label>
+                House Number:{" "}
+                <input
+                  type="string"
+                  value={houseNo}
+                  onChange={(e) => setHouseNo(e.target.value)}
+                />
+              </label>
+            </p>
+            <p>
+              <label>
+                Price: €{""}
+                <input
+                  type="number"
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                />
+                /permonth
+              </label>
+            </p>
+            <p>
+              <label>
+                Latitude:
+                <input
+                  type="string"
+                  value={latitude}
+                  onChange={(e) => setLatitude(e.target.value)}
+                />
+              </label>
+            </p>
+            <p>
+              <label>
+                Longtitude:
+                <input
+                  type="string"
+                  value={longtitude}
+                  onChange={(e) => setLongtitude(e.target.value)}
+                />
+              </label>
+            </p>
+            <p>
+              <label>
+                Available Start Date:
+                <input
+                  type="date"
+                  value={availableStartDate}
+                  onChange={(e) => setAvailableStartDate(e.target.value)}
+                />
+              </label>
+            </p>
+            <p>
+              <label>
+                Available End Date:
+                <input
+                  type="date"
+                  value={availableEndDate}
+                  onChange={(e) => setAvailableEndDate(e.target.value)}
+                />
+              </label>
+            </p>
+            <p>
+              <label>
+                Available Spots:
+                <input
+                  type="number"
+                  value={availableSpots}
+                  onChange={(e) => setAvailableSpots(e.target.value)}
+                />
+              </label>
+            </p>
+            <p>
+              <label>
+                Description:
+                <input
+                  type="text"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </label>
+            </p>
+            <p>
+              <label>
+                Image:
+                <input
+                  type="string"
+                  value={image}
+                  onChange={(e) => setImage(e.target.value)}
+                />
+              </label>
+            </p>
+            <p>
+              <button type="submit"> Submit </button>
+            </p>
+          </Grid>
+        </form>
+      </div>
     </div>
   );
 }

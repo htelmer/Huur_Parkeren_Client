@@ -8,7 +8,7 @@ export default function AreaCard(props) {
         {props.streetName} {props.houseNo}
       </h2>
       <p>
-        {props.postalCode} {props.City}
+        {props.postalCode} {props.city}
       </p>
       <p>{props.price}</p>
       <img src={props.image} alt="img" style={{ width: 200 }} />

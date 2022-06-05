@@ -31,7 +31,21 @@ export const userSlice = createSlice({
         : [...state.profile.favorites, idToAdd];
 
       console.log("new favorites", newFavs);
-      state.user.profile.favorites = newFavs;
+      state.profile.favorites = newFavs;
+    },
+    areaDeleteSuccess: (state, action) => {
+      const areaId = action.payload;
+      const deleteArea = state.profile?.owner.filter(
+        (area) => area.id !== areaId
+      );
+      state.profile.owner = deleteArea;
+    },
+    removeFavsSuccess: (state, action) => {
+      const favId = action.payload;
+      const removeFavs = state.profile?.favorites.filter(
+        (favs) => favs.id !== favId
+      );
+      state.profile.favorites = removeFavs;
     },
   },
 });
@@ -42,6 +56,8 @@ export const {
   tokenStillValid,
   auctionPostedSuccess,
   toggleFavorites,
+  areaDeleteSuccess,
+  removeFavsSuccess,
 } = userSlice.actions;
 
 export default userSlice.reducer;

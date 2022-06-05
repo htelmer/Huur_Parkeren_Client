@@ -1,12 +1,30 @@
 import React, { useEffect, useState } from "react";
+import "./styles.css";
+import { Grid, Paper, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllAreas } from "../../store/rentalAreas/actions";
 import AreaCard from "../../components/AreaCard";
-import { selectAreas } from "../../store/rentalAreas/selectors";
+import {
+  selectAreas,
+  getPricesLowerThan,
+} from "../../store/rentalAreas/selectors";
 import { Link } from "react-router-dom";
 import "react-calendar/dist/Calendar.css";
-import { selectCityFilter } from "../../store/filters/selectors";
+import {
+  selectCityFilter,
+  selectAllCityFilter,
+} from "../../store/filters/selectors";
 import { filterCities } from "../../store/filters/slice";
+
+const backgroundStyle = {
+  paperContainer: {
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    width: "100vw",
+    height: "100vh",
+  },
+};
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -15,6 +33,12 @@ export default function Home() {
   const allArea = useSelector(selectCityFilter);
   console.log("filterreducer", allArea);
   const [city, setCity] = useState("");
+  const [search, setSearch] = useState("");
+
+  const [lowerPrices, setLowerPrices] = useState(1000);
+  const parsedLowerPrices = parseInt(lowerPrices);
+  const lPrices = useSelector(getPricesLowerThan(parsedLowerPrices));
+  const allAreaReducer = useSelector(selectAllCityFilter);
 
   useEffect(() => {
     dispatch(fetchAllAreas);
@@ -28,40 +52,75 @@ export default function Home() {
   }, [city]);
 
   return (
-    <div>
-      <select
-        name="cities"
-        value={city}
-        onChange={(event) => setCity(event.target.value)}
-      >
-        <option value={allArea.allRentalAreas}>All Cities</option>
-        {allArea.map((area) => (
-          <option value={area.name}>{area.name}</option>
-        ))}
-      </select>
-      <div>
-        <Link to={`/map`}>
-          <button>View Map</button>
-        </Link>
-        <h1>Areas</h1>
-        <p>
-          {areas
-            .filter((c) => (city ? c.city === city : true))
-            .map((s) => (
-              <AreaCard
-                key={s.id}
-                id={s.id}
-                streetName={s.streetName}
-                houseNo={s.houseNo}
-                postalCode={s.postalCode}
-                city={s.city}
-                price={s.price}
-                image={s.image}
-                favorites={s.favorites}
-              />
+    <Grid>
+      <Paper style={backgroundStyle.paperContainer}>
+        <div>
+          <input
+            placeholder="Search by city, street etc."
+            type="text"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+          ></input>
+          <label>Price to:</label>
+          <input
+            type="number"
+            placeholder="No Limit"
+            value={lowerPrices}
+            onChange={(e) => setLowerPrices(e.target.value)}
+          />
+          <select
+            name="cities"
+            value={city}
+            onChange={(event) => setCity(event.target.value)}
+          >
+            <option value={allAreaReducer.filter}>All Cities</option>
+            {allArea.map((area) => (
+              <option value={area.name}>{area.name}</option>
             ))}
-        </p>
-      </div>
-    </div>
+          </select>
+          <div>
+            <Link to={`/map`}>
+              <button>View Map</button>
+            </Link>
+
+            <h1>Areas</h1>
+            <div className="display_areas">
+              <p>
+                {lPrices.length
+                  ? lPrices
+                      .filter((c) => (city ? c.city === city : true))
+                      .filter(
+                        (a) =>
+                          a.streetName
+                            .toLowerCase()
+                            .includes(search.toLocaleLowerCase()) ||
+                          a.city.toLowerCase().includes(search.toLowerCase()) ||
+                          a.postalCode
+                            .toLowerCase()
+                            .includes(search.toLowerCase()) ||
+                          a.description
+                            .toLowerCase()
+                            .includes(search.toLowerCase())
+                      )
+                      .map((s) => (
+                        <AreaCard
+                          key={s.id}
+                          id={s.id}
+                          streetName={s.streetName}
+                          houseNo={s.houseNo}
+                          postalCode={s.postalCode}
+                          city={s.city}
+                          price={s.price}
+                          image={s.image}
+                          favorites={s.favorites}
+                        />
+                      ))
+                  : "No areas with this conditions"}
+              </p>
+            </div>
+          </div>
+        </div>
+      </Paper>
+    </Grid>
   );
 }

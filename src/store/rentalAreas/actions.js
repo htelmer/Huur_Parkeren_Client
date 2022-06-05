@@ -1,5 +1,6 @@
 import { fetchAreas, startLoading, areaDetailsFetched } from "./slice";
 import { appDoneLoading } from "../appState/slice";
+import { areaDeleteSuccess, removeFavsSuccess } from "../user/slice";
 import axios from "axios";
 //import { selectToken } from "../user/selectors";
 //import { appLoading, appDoneLoading } from "../appState/slice";
@@ -34,5 +35,41 @@ export const fetchAreaById = (id) => async (dispatch, getState) => {
     dispatch(appDoneLoading());
   } catch (e) {
     console.log(e);
+  }
+};
+
+export const deleteArea = (id) => async (dispatch, getState) => {
+  console.log("id", id);
+  try {
+    dispatch(startLoading());
+
+    const response = await axios.delete(`${apiUrl}/area/myArea/${id}`);
+
+    console.log(response.data);
+
+    dispatch(areaDeleteSuccess({ areaId: id })); //
+
+    dispatch(appDoneLoading());
+  } catch (e) {
+    console.log(e.message);
+    dispatch(appDoneLoading());
+  }
+};
+
+export const removeFavorites = (id) => async (dispatch, getState) => {
+  console.log("id", id);
+  try {
+    dispatch(startLoading());
+
+    const response = await axios.delete(`${apiUrl}/favorite/${id}`);
+
+    console.log("response", response.data);
+
+    dispatch(removeFavsSuccess({ favId: id })); //
+
+    dispatch(appDoneLoading());
+  } catch (e) {
+    console.log(e.message);
+    dispatch(appDoneLoading());
   }
 };
