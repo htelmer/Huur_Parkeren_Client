@@ -48,28 +48,48 @@ export const deleteArea = (id) => async (dispatch, getState) => {
     console.log(response.data);
 
     dispatch(areaDeleteSuccess({ areaId: id })); //
-
-    dispatch(appDoneLoading());
   } catch (e) {
     console.log(e.message);
     dispatch(appDoneLoading());
   }
 };
 
-export const removeFavorites = (id) => async (dispatch, getState) => {
-  console.log("id", id);
+export const removeFavorites = (areaId) => async (dispatch, getState) => {
+  console.log("id", areaId);
   try {
     dispatch(startLoading());
 
-    const response = await axios.delete(`${apiUrl}/favorite/${id}`);
+    const response = await axios.delete(`${apiUrl}/area/savedAreas`);
 
     console.log("response", response.data);
 
-    dispatch(removeFavsSuccess({ favId: id })); //
-
-    dispatch(appDoneLoading());
+    dispatch(removeFavsSuccess({ favId: areaId })); //
   } catch (e) {
     console.log(e.message);
     dispatch(appDoneLoading());
   }
+};
+
+export const postBooking = (newBooking) => {
+  return async (dispatch, getState) => {
+    try {
+      const { token } = getState().user;
+      const { tillWhen } = newBooking;
+      const response = await axios.post(
+        `${apiUrl}/area/bookings/`,
+        { tillWhen },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("response", response);
+
+      dispatch(appDoneLoading());
+    } catch (e) {
+      console.log(e.message);
+      dispatch(appDoneLoading());
+    }
+  };
 };

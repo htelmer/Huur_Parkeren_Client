@@ -103,6 +103,7 @@ export default function Home() {
                           price={s.price}
                           image={s.image}
                           favorites={s.favorites}
+                          bookings={s.bookings}
                         />
                       ))
                   : "No areas with this conditions"}

@@ -166,7 +166,7 @@ export const postNewArea = (newArea) => async (dispatch, getState) => {
       showMessageWithTimeout(
         "success",
         false,
-        "Artwork is posted successfully!!",
+        "Area is posted successfully!!",
         1500
       )
     );

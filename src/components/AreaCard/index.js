@@ -28,12 +28,21 @@ export default function AreaCard(props) {
             <Typography variant="subtitle1" paragraph>
               € {props.price}
             </Typography>
-            <Typography variant="subtitle1" color="primary">
-              View Details
-            </Typography>
+            {props.bookings.length === 0 ? (
+              <Typography color="#2e7d32">Available Now</Typography>
+            ) : (
+              <Typography color="#ef5350">
+                {" "}
+                Booked till {"  "}
+                {props.bookings.map((when) => when.tillWhen)}
+              </Typography>
+            )}
             <FavoriteIcon color="error" sx={{ m: -0.7 }} />
             {"    "}
             {props.favorites.length}
+            <Typography variant="subtitle1" color="primary">
+              View Details
+            </Typography>
           </CardContent>
         </Card>
       </CardActionArea>

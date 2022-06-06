@@ -17,6 +17,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
+import axios from "axios";
 
 export default function NewParkingArea() {
   const [city, setCity] = useState("");
@@ -37,6 +38,24 @@ export default function NewParkingArea() {
     dispatch(filterCities);
   }, [dispatch]);
 
+  const uploadImage = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "ieyzmdtf");
+    // console.log("main",files)
+
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dk3j2476r/image/upload",
+      {
+        method: "POST",
+        body: data,
+      }
+    );
+    const file = await res.json();
+    console.log(file);
+    setImage(file.url);
+  };
   const submit = (event) => {
     event.preventDefault();
     const newArea = {
@@ -227,16 +246,8 @@ export default function NewParkingArea() {
               fullWidth
               sx={{ m: 1 }}
             />
-            <TextField
-              id="image"
-              label="Image"
-              type="text"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-              margin="normal"
-              fullWidth
-              sx={{ m: 1, width: "35ch" }}
-            />
+            <Typography>Image</Typography>
+            <input type="file" onChange={uploadImage} />
 
             <Button
               sx={{ m: 1 }}

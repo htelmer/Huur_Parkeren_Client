@@ -4,9 +4,10 @@ import { fetchAreaById } from "../../store/rentalAreas/actions";
 import {
   getLoading,
   selectAreaDetails,
+  selectAreas,
+  selectAllReducer,
 } from "../../store/rentalAreas/selectors";
 import { useParams } from "react-router-dom";
-import { selectToken, selectFavorites } from "../../store/user/selectors";
 import { setFavorites } from "../../store/user/actions";
 import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
@@ -17,11 +18,13 @@ export default function AreaDetails() {
   const dispatch = useDispatch();
   const loading = useSelector(getLoading);
   const details = useSelector(selectAreaDetails);
-  const userId =
-    details.favorites//const favorites = useSelector(selectFavorites);
-    //console.log("favorites", favorites);
-    .console
-      .log("details??", details);
+  const areas = useSelector(selectAreas);
+  console.log("areas", areas);
+  const reducer = useSelector(selectAllReducer);
+  console.log("reducer?", reducer);
+  //const userId = details.favorites.userId;
+  //console.log("favorites", favorites); //const favorites = useSelector(selectFavorites);
+  console.log("details??", details);
   useEffect(() => {
     dispatch(fetchAreaById(id));
   }, [dispatch, id]);
@@ -60,8 +63,17 @@ export default function AreaDetails() {
               style={{ borderRadius: "10px", height: "50px" }}
               onClick={() => dispatch(setFavorites(details.id))}
             >
-              {details.favorites ? "Remove" : "Save"}
+              Save
             </button>
+            {details.bookings.length === 0 ? (
+              <button>Book now!</button>
+            ) : (
+              <p>
+                {" "}
+                This area is reserved till{" "}
+                {details.bookings.map((when) => when.tillWhen)}
+              </p>
+            )}
           </div>
         )}
       </div>
