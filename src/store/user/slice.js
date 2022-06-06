@@ -27,7 +27,7 @@ export const userSlice = createSlice({
       console.log("id", idToAdd.areaId);
       // console.log("state", state.profile?.favorites);
       const newFavs = state.profile?.favorites?.includes(idToAdd)
-        ? state.profile.favorites.filter((areaId) => areaId !== idToAdd)
+        ? state.profile.favorites.filter((areaId) => areaId.id !== idToAdd)
         : [...state.profile.favorites, idToAdd];
 
       console.log("new favorites", newFavs);

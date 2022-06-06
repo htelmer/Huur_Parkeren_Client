@@ -47,7 +47,11 @@ export default function SavedAreas() {
                 </p>
                 <img href={fav.image} />
                 <p>{fav.description}</p>
-                <Button variant="danger" onClick={() => onRemoveClick(fav.id)}>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => onRemoveClick(fav.id)}
+                >
                   Remove
                 </Button>
               </div>

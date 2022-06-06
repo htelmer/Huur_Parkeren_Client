@@ -50,7 +50,8 @@ export default function MyParkingArea() {
                   <img href={own.image} />
                   <p>{own.description}</p>
                   <Button
-                    variant="danger"
+                    variant="contained"
+                    color="error"
                     onClick={() => onDeleteClick(own.id)}
                   >
                     Delete

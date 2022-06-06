@@ -16,16 +16,6 @@ import {
 } from "../../store/filters/selectors";
 import { filterCities } from "../../store/filters/slice";
 
-const backgroundStyle = {
-  paperContainer: {
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    backgroundRepeat: "no-repeat",
-    width: "100vw",
-    height: "100vh",
-  },
-};
-
 export default function Home() {
   const dispatch = useDispatch();
   const areas = useSelector(selectAreas);
@@ -53,7 +43,7 @@ export default function Home() {
 
   return (
     <Grid>
-      <Paper style={backgroundStyle.paperContainer}>
+      <Paper>
         <div>
           <input
             placeholder="Search by city, street etc."

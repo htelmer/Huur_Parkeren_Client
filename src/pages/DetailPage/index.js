@@ -17,9 +17,11 @@ export default function AreaDetails() {
   const dispatch = useDispatch();
   const loading = useSelector(getLoading);
   const details = useSelector(selectAreaDetails);
-  //const favorites = useSelector(selectFavorites);
-  //console.log("favorites", favorites);
-  console.log("details??", details);
+  const userId =
+    details.favorites//const favorites = useSelector(selectFavorites);
+    //console.log("favorites", favorites);
+    .console
+      .log("details??", details);
   useEffect(() => {
     dispatch(fetchAreaById(id));
   }, [dispatch, id]);
@@ -58,7 +60,7 @@ export default function AreaDetails() {
               style={{ borderRadius: "10px", height: "50px" }}
               onClick={() => dispatch(setFavorites(details.id))}
             >
-              Save
+              {details.favorites ? "Remove" : "Save"}
             </button>
           </div>
         )}
