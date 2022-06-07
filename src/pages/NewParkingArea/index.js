@@ -18,6 +18,8 @@ import Button from "@mui/material/Button";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import axios from "axios";
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
 
 export default function NewParkingArea() {
   const [city, setCity] = useState("");

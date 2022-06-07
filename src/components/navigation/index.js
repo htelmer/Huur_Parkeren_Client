@@ -12,6 +12,10 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Grid from "@mui/material/Grid";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
 
 const theme = createTheme({
   status: {
@@ -34,42 +38,44 @@ export default function Navigation() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ flexGrow: 1 }}>
+      <Container maxWidth="xl">
         <AppBar position="static">
-          <Container maxWidth="xl">
-            <Toolbar disableGutters>
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                sx={{ mr: 2 }}
-              ></IconButton>
-              <Typography
-                variant="h6"
-                noWrap
-                component="a"
-                href="/"
-                sx={{
-                  mr: 2,
-                  display: { xs: "none", md: "flex" },
-                  fontFamily: "monospace",
-                  fontWeight: 700,
-                  letterSpacing: ".3rem",
-                  color: "inherit",
-                  textDecoration: "none",
-                }}
-              >
-                HuurParkeren
-              </Typography>
-
-              <Button sx={{ color: "inherit" }}>{loginLogoutControls}</Button>
-
-              <Button sx={{ color: "inherit" }}>{myAccount}</Button>
-            </Toolbar>
-          </Container>
+          <Toolbar disableGutters>
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ mr: 2 }}
+            ></IconButton>
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                mr: 2,
+                display: { xs: "none", md: "flex" },
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              HuurParkeren
+            </Typography>
+            <Grid style={{ marginLeft: "auto" }}>
+              <Button variant="outlined" sx={{ color: "inherit" }}>
+                {loginLogoutControls}
+              </Button>
+              <Button variant="outlined" sx={{ color: "inherit" }}>
+                {myAccount}
+              </Button>
+            </Grid>
+          </Toolbar>
         </AppBar>
-      </Box>
+      </Container>
     </ThemeProvider>
   );
 }

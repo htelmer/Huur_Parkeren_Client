@@ -15,6 +15,7 @@ import Button from "@mui/material/Button";
 export default function MyParkingArea() {
   const dispatch = useDispatch();
   const myAreas = useSelector(selectMyAreas);
+  console.log("myareas", myAreas);
   const onDeleteClick = (id) => {
     console.log("clicked?", id);
     dispatch(deleteArea(id));
@@ -47,7 +48,7 @@ export default function MyParkingArea() {
                   <p>
                     {own.streetName} {own.houseNo}
                   </p>
-                  <img href={own.image} />
+                  <img src={own.image} width="200" />
                   <p>{own.description}</p>
                   <Button
                     variant="contained"

@@ -15,6 +15,7 @@ import SavedAreas from "./pages/SavedParkingAreas";
 import NewParkingArea from "./pages/NewParkingArea";
 import MyParkingArea from "./pages/MyParkingArea";
 import Map from "./pages/Map";
+import MessageBox from "./components/MessageBox";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ function App() {
     <div className="App">
       <Navigation />
       {isLoading ? <Loading /> : null}
+      <MessageBox />
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/map" element={<Map />} />

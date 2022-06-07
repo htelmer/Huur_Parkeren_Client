@@ -179,11 +179,13 @@ export const postNewArea = (newArea) => async (dispatch, getState) => {
 export const setFavorites = (areaId) => {
   return async (dispatch, getState) => {
     try {
+      console.log("areaId", areaId);
       const {
         token,
         profile: { id },
       } = getState().user;
       console.log("userId,areaID", id, areaId);
+      dispatch(appLoading());
       const response = await axios.post(
         `${apiUrl}/area/favorites/`,
         { userId: id, areaId: areaId },
@@ -199,6 +201,7 @@ export const setFavorites = (areaId) => {
         showMessageWithTimeout("success", false, "Favorites Added", 3000)
       );
       dispatch(toggleFavorites(response.data));
+      dispatch(appDoneLoading());
     } catch (e) {
       console.log(e.message);
     }

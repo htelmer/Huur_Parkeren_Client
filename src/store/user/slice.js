@@ -25,16 +25,20 @@ export const userSlice = createSlice({
     toggleFavorites: (state, action) => {
       const idToAdd = action.payload;
       console.log("id", idToAdd.areaId);
-      // console.log("state", state.profile?.favorites);
-      const newFavs = state.profile?.favorites?.includes(idToAdd)
-        ? state.profile.favorites.filter((areaId) => areaId.id !== idToAdd)
+      console.log("current favorites", JSON.stringify(state.profile));
+      console.log("idtoadd", JSON.stringify(idToAdd));
+      const newFavs = state.profile?.favorites?.some(
+        (fav) => fav.id === idToAdd.id
+      )
+        ? state.profile.favorites.filter((areaId) => areaId.id !== idToAdd.id)
         : [...state.profile.favorites, idToAdd];
 
       console.log("new favorites", newFavs);
       state.profile.favorites = newFavs;
     },
     areaDeleteSuccess: (state, action) => {
-      const areaId = action.payload;
+      const areaId = action.payload.areaId;
+      console.log("tugce", areaId);
       const deleteArea = state.profile?.owner.filter(
         (area) => area.id !== areaId
       );

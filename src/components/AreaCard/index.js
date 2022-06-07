@@ -9,7 +9,14 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 
 export default function AreaCard(props) {
   return (
-    <Grid item xs={12} md={6} p={2} mx="auto">
+    <Grid
+      item
+      xs={12}
+      md={6}
+      p={2}
+      sx={{ m: 1, width: "70ch" }}
+      justifyContent="flex-start"
+    >
       <CardActionArea component="a" href={`/area/${props.id}`}>
         <Card sx={{ display: "flex" }}>
           <CardMedia
@@ -18,7 +25,7 @@ export default function AreaCard(props) {
             image={props.image}
             alt="img"
           />
-          <CardContent sx={{ flex: 1 }}>
+          <CardContent sx={{ flex: 1 }} justifyContent="flex-end">
             <Typography component="h2" variant="h5">
               {props.streetName}, {props.houseNo}
             </Typography>

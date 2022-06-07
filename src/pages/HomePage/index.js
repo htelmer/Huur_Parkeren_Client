@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from "react";
 import "./styles.css";
-import { Grid, Paper, Typography } from "@mui/material";
+import {
+  Grid,
+  Paper,
+  Typography,
+  TextField,
+  FormControl,
+  OutlinedInput,
+  MenuItem,
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllAreas } from "../../store/rentalAreas/actions";
 import AreaCard from "../../components/AreaCard";
 import {
   selectAreas,
   getPricesLowerThan,
+  getPricesHigherThan,
 } from "../../store/rentalAreas/selectors";
-import { Link } from "react-router-dom";
+import SearchIcon from "@mui/icons-material/Search";
+
 import "react-calendar/dist/Calendar.css";
 import {
   selectCityFilter,
@@ -25,7 +35,8 @@ export default function Home() {
   const [city, setCity] = useState("");
   const [search, setSearch] = useState("");
 
-  const [lowerPrices, setLowerPrices] = useState(1000);
+  const [lowerPrices, setLowerPrices] = useState();
+  const [higherPrices, setHigherPrices] = useState(0);
   const parsedLowerPrices = parseInt(lowerPrices);
   const lPrices = useSelector(getPricesLowerThan(parsedLowerPrices));
   const allAreaReducer = useSelector(selectAllCityFilter);
@@ -43,37 +54,89 @@ export default function Home() {
 
   return (
     <Grid>
-      <Paper>
-        <div>
-          <input
-            placeholder="Search by city, street etc."
-            type="text"
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-          ></input>
-          <label>Price to:</label>
-          <input
-            type="number"
-            placeholder="No Limit"
-            value={lowerPrices}
-            onChange={(e) => setLowerPrices(e.target.value)}
-          />
-          <select
-            name="cities"
-            value={city}
-            onChange={(event) => setCity(event.target.value)}
+      <div className="map-list-box">
+        <div class="search-content">
+          <a className="active-view-type" href={`/`}>
+            LIST
+          </a>
+          <a href={`/map`}> MAP </a>
+        </div>
+        <Paper sx={{ display: "flex", flexWrap: "wrap" }}>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            p={2}
+            sx={{ m: 3, width: "30ch" }}
+            justifyContent="flex-start"
+            direction="column"
           >
-            <option value={allAreaReducer.filter}>All Cities</option>
-            {allArea.map((area) => (
-              <option value={area.name}>{area.name}</option>
-            ))}
-          </select>
-          <div>
-            <Link to={`/map`}>
-              <button>View Map</button>
-            </Link>
+            <div>
+              <Grid>
+                <FormControl fullWidth sx={{ m: 1, width: "25ch" }} required>
+                  <OutlinedInput
+                    id="outlined-adornment-amount"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Search by city, street etc."
+                    type="text"
+                    startAdornment={<SearchIcon position="start" />}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid>
+                <Typography>
+                  Price to:
+                  <OutlinedInput
+                    type="number"
+                    placeholder="No Limit"
+                    value={lowerPrices}
+                    onChange={(e) => setLowerPrices(e.target.value)}
+                  />
+                </Typography>
+              </Grid>
+              <Grid>
+                <Typography>
+                  Price from:
+                  <OutlinedInput
+                    type="number"
+                    placeholder="No Limit"
+                    value={lowerPrices}
+                    onChange={(e) => setLowerPrices(e.target.value)}
+                    sx={{ m: 3, width: "20ch" }}
+                  />
+                </Typography>
+              </Grid>
+              <Grid>
+                <TextField
+                  id="select-city"
+                  select
+                  value={city}
+                  onChange={(event) => setCity(event.target.value)}
+                  sx={{ m: 1, width: "25ch" }}
+                  margin="normal"
+                  className={city.textField}
+                  SelectProps={{
+                    MenuProps: {
+                      className: city.menu,
+                    },
+                  }}
+                  label="Select City"
+                >
+                  <MenuItem value={allAreaReducer.filter}>All Cities</MenuItem>
+                  {allArea.map((area) => (
+                    <MenuItem value={area.name}>{area.name}</MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+            </div>
+          </Grid>
 
-            <h1>Areas</h1>
+          <Grid
+            sx={{ display: "flex", m: 1.5 }}
+            variant="outlined"
+            justifyContent="flex-end"
+          >
             <div className="display_areas">
               <p>
                 {lPrices.length
@@ -109,9 +172,9 @@ export default function Home() {
                   : "No areas with this conditions"}
               </p>
             </div>
-          </div>
-        </div>
-      </Paper>
+          </Grid>
+        </Paper>
+      </div>
     </Grid>
   );
 }

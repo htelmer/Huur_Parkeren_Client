@@ -2,6 +2,7 @@ import { fetchAreas, startLoading, areaDetailsFetched } from "./slice";
 import { appDoneLoading } from "../appState/slice";
 import { areaDeleteSuccess, removeFavsSuccess } from "../user/slice";
 import axios from "axios";
+import { showMessageWithTimeout } from "../appState/actions";
 //import { selectToken } from "../user/selectors";
 //import { appLoading, appDoneLoading } from "../appState/slice";
 //import { setMessage } from "../appState/slice";
@@ -63,7 +64,7 @@ export const removeFavorites = (areaId) => async (dispatch, getState) => {
 
     console.log("response", response.data);
 
-    dispatch(removeFavsSuccess({ favId: areaId })); //
+    dispatch(removeFavsSuccess(areaId)); //
   } catch (e) {
     console.log(e.message);
     dispatch(appDoneLoading());
@@ -74,10 +75,11 @@ export const postBooking = (newBooking) => {
   return async (dispatch, getState) => {
     try {
       const { token } = getState().user;
-      const { tillWhen } = newBooking;
+      const { tillWhen, areaId } = newBooking;
+      console.log("newBooking", newBooking);
       const response = await axios.post(
         `${apiUrl}/area/bookings/`,
-        { tillWhen },
+        { tillWhen, areaId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -87,6 +89,14 @@ export const postBooking = (newBooking) => {
       console.log("response", response);
 
       dispatch(appDoneLoading());
+      dispatch(
+        showMessageWithTimeout(
+          "success",
+          false,
+          "Your Reservation is Received!!",
+          3000
+        )
+      );
     } catch (e) {
       console.log(e.message);
       dispatch(appDoneLoading());

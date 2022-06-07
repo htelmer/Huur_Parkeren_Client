@@ -14,9 +14,9 @@ export default function SavedAreas() {
   console.log("selectors", user);
   const token = useSelector(selectToken);
   const area = useSelector(selectAreas);
-  const onRemoveClick = (id) => {
-    console.log("clicked?", id);
-    dispatch(removeFavorites(id));
+  const onRemoveClick = (areaId) => {
+    console.log("clicked?", areaId);
+    dispatch(removeFavorites(areaId));
   };
 
   /*useEffect(() => {
@@ -45,7 +45,7 @@ export default function SavedAreas() {
                 <p>
                   {fav.streetName} {fav.houseNo}
                 </p>
-                <img href={fav.image} />
+                <img src={fav.image} width="200" />
                 <p>{fav.description}</p>
                 <Button
                   variant="contained"
