@@ -38,44 +38,42 @@ export default function Navigation() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container maxWidth="xl">
-        <AppBar position="static">
-          <Toolbar disableGutters>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            ></IconButton>
-            <Typography
-              variant="h6"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                mr: 2,
-                display: { xs: "none", md: "flex" },
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              HuurParkeren
-            </Typography>
-            <Grid style={{ marginLeft: "auto" }}>
-              <Button variant="outlined" sx={{ color: "inherit" }}>
-                {loginLogoutControls}
-              </Button>
-              <Button variant="outlined" sx={{ color: "inherit" }}>
-                {myAccount}
-              </Button>
-            </Grid>
-          </Toolbar>
-        </AppBar>
-      </Container>
+      <AppBar position="static">
+        <Toolbar disableGutters>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          ></IconButton>
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            HuurParkeren
+          </Typography>
+          <Grid style={{ marginLeft: "auto" }}>
+            <Button variant="outlined" sx={{ color: "inherit" }}>
+              {loginLogoutControls}
+            </Button>
+            <Button variant="outlined" sx={{ color: "inherit" }}>
+              {myAccount}
+            </Button>
+          </Grid>
+        </Toolbar>
+      </AppBar>
     </ThemeProvider>
   );
 }

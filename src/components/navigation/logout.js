@@ -6,7 +6,15 @@ import MenuItem from "@mui/material/MenuItem";
 export default function LoggedOut() {
   return (
     <>
-      <NavbarItem path="/login" linkText="Login" />
+      <Button
+        sx={{
+          underline: "none",
+          backgroundColor: "#F9F8F4",
+        }}
+        href="/login"
+      >
+        Login
+      </Button>
     </>
   );
 }

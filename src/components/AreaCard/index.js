@@ -14,7 +14,7 @@ export default function AreaCard(props) {
       xs={12}
       md={6}
       p={2}
-      sx={{ m: 1, width: "70ch" }}
+      sx={{ m: 1, width: "90ch" }}
       justifyContent="flex-start"
     >
       <CardActionArea component="a" href={`/area/${props.id}`}>
@@ -25,7 +25,7 @@ export default function AreaCard(props) {
             image={props.image}
             alt="img"
           />
-          <CardContent sx={{ flex: 1 }} justifyContent="flex-end">
+          <CardContent sx={{ flex: 1 }}>
             <Typography component="h2" variant="h5">
               {props.streetName}, {props.houseNo}
             </Typography>

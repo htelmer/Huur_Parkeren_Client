@@ -45,7 +45,7 @@ export default function NewParkingArea() {
     const data = new FormData();
     data.append("file", files[0]);
     data.append("upload_preset", "ieyzmdtf");
-    // console.log("main",files)
+    console.log("main", files);
 
     const res = await fetch(
       "https://api.cloudinary.com/v1_1/dk3j2476r/image/upload",
@@ -249,8 +249,7 @@ export default function NewParkingArea() {
               sx={{ m: 1 }}
             />
             <Typography>Image</Typography>
-            <input type="file" onChange={uploadImage} />
-
+            <input type="file" />
             <Button
               sx={{ m: 1 }}
               variant="contained"

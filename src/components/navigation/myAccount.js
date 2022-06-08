@@ -9,15 +9,6 @@ import Menu from "@mui/material/Menu";
 import Grid from "@mui/material/Grid";
 
 export default function MyAccount() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   return (
     <>
       <Grid justifyContent="flex-end">
@@ -30,7 +21,7 @@ export default function MyAccount() {
           href="/myAccount"
           justifyContent="flex-end"
         >
-          <AccountCircle style={{ marginLeft: "90%" }} />
+          <AccountCircle />
         </IconButton>
       </Grid>
     </>

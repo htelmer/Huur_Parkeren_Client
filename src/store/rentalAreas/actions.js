@@ -48,7 +48,8 @@ export const deleteArea = (id) => async (dispatch, getState) => {
 
     console.log(response.data);
 
-    dispatch(areaDeleteSuccess({ areaId: id })); //
+    dispatch(areaDeleteSuccess({ areaId: id }));
+    dispatch(showMessageWithTimeout("success", false, "Area Deleted", 3000)); //
   } catch (e) {
     console.log(e.message);
     dispatch(appDoneLoading());
@@ -59,12 +60,24 @@ export const removeFavorites = (areaId) => async (dispatch, getState) => {
   console.log("id", areaId);
   try {
     dispatch(startLoading());
+    const { token, profile } = getState().user;
 
-    const response = await axios.delete(`${apiUrl}/area/savedAreas`);
+    console.log("token", token);
+
+    const response = await axios.delete(
+      `${apiUrl}/area/savedAreas/${profile?.id}/delete/${areaId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     console.log("response", response.data);
-
     dispatch(removeFavsSuccess(areaId)); //
+    dispatch(
+      showMessageWithTimeout("success", false, "Favorite Removed", 3000)
+    );
   } catch (e) {
     console.log(e.message);
     dispatch(appDoneLoading());

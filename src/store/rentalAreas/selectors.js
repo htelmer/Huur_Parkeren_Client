@@ -10,7 +10,15 @@ export const getPricesLowerThan = (price) => (reduxState) => {
     return area.filter((c) => c.price <= price);
   }
   return area;
-  //const higherThan = area.filter((h) => h.price > price);
-  //const definedPrice = area.filter(
-  //(b) => lowerThan >= b.price && b.price > higherThan
 };
+export const selectAvailableFrom = (availableStartDate) => (reduxState) => {
+  const area = reduxState.area.allRentalAreas;
+  const availableFrom = area.filter(
+    (d) => d.availableStartDate >= availableStartDate
+  );
+  return availableFrom;
+};
+
+//const higherThan = area.filter((h) => h.price > price);
+//const definedPrice = area.filter(
+//(b) => lowerThan >= b.price && b.price > higherThan

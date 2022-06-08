@@ -2,13 +2,13 @@ import { DEFAULT_MESSAGE_TIMEOUT } from "../../config/constants";
 import { setMessage, clearMessage } from "./slice";
 
 export const showMessageWithTimeout = (
-  variant,
+  severity,
   dismissable,
   text,
   timeOutMilliSeconds
 ) => {
   return (dispatch) => {
-    dispatch(setMessage({ variant, dismissable, text }));
+    dispatch(setMessage({ severity, dismissable, text }));
 
     const timeout = timeOutMilliSeconds || DEFAULT_MESSAGE_TIMEOUT;
 
