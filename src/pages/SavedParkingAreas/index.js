@@ -25,7 +25,7 @@ export default function SavedAreas() {
 
   return (
     <div>
-      <Breadcrumbs aria-label="breadcrumb">
+      <Breadcrumbs aria-label="breadcrumb" sx={{ m: 3 }}>
         <Link underline="hover" color="inherit" href="/">
           Home
         </Link>
@@ -34,7 +34,9 @@ export default function SavedAreas() {
         </Link>
         <Typography color="text.primary">Saved Parking Areas</Typography>
       </Breadcrumbs>
-      <h1>Saved Areas</h1>
+      <Typography variant="h4" sx={{ fontSize: "2rem" }}>
+        Saved Areas
+      </Typography>
       {user.favorites
         ? user.favorites.map((fav) => {
             return (

@@ -27,7 +27,7 @@ export default function MyParkingArea() {
 
   return (
     <div>
-      <Breadcrumbs aria-label="breadcrumb">
+      <Breadcrumbs aria-label="breadcrumb" sx={{ m: 3 }}>
         <Link underline="hover" color="inherit" href="/">
           Home
         </Link>

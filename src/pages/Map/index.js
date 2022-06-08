@@ -97,7 +97,7 @@ export default function Map() {
         >
           <div>
             <Grid>
-              <FormControl fullWidth sx={{ m: 1, width: "25ch" }} required>
+              <FormControl fullWidth sx={{ mb: 4, width: "25ch" }} required>
                 <OutlinedInput
                   id="outlined-adornment-amount"
                   value={search}
@@ -119,7 +119,9 @@ export default function Map() {
                 />
               </Typography>
             </Grid>
-            <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 300 }}>
+            <FormControl
+              sx={{ mt: 4, ml: 7, minWidth: 120, maxWidth: 300, width: "20ch" }}
+            >
               <InputLabel shrink htmlFor="select-multiple-native">
                 City
               </InputLabel>
@@ -139,8 +141,10 @@ export default function Map() {
                 ))}
               </Select>
             </FormControl>
-            <Grid>
-              <Typography>Current Status</Typography>
+            <Grid
+              sx={{ mt: 4, ml: 7, minWidth: 120, maxWidth: 300, width: "20ch" }}
+            >
+              <Typography variant="h6">Current Status</Typography>
               <FormGroup>
                 <FormControlLabel
                   control={

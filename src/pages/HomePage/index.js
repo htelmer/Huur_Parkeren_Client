@@ -68,90 +68,107 @@ export default function Home() {
         </div>
       </Grid>
       <Paper sx={{ display: "flex", flexWrap: "wrap" }}>
-        <Grid
-          item
-          xs={12}
-          md={6}
-          p={2}
-          sx={{ m: 3, width: "30ch" }}
-          justifyContent="flex-start"
-          direction="column"
-        >
-          <div>
-            <Grid>
-              <FormControl fullWidth sx={{ m: 1, width: "25ch" }} required>
-                <OutlinedInput
-                  id="outlined-adornment-amount"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search by city, street etc."
-                  type="text"
-                  startAdornment={<SearchIcon position="start" />}
-                />
-              </FormControl>
-            </Grid>
-            <Grid>
-              <Typography>
-                Price to:
-                <OutlinedInput
-                  type="number"
-                  placeholder="No Limit"
-                  value={lowerPrices}
-                  onChange={(e) => setLowerPrices(e.target.value)}
-                />
-              </Typography>
-            </Grid>
-            <FormControl sx={{ m: 1, minWidth: 120, maxWidth: 300 }}>
-              <InputLabel shrink htmlFor="select-multiple-native">
-                City
-              </InputLabel>
-              <Select
-                multiple
-                native
-                value={city}
-                // @ts-ignore Typings are not considering `native`
-                onChange={(event) => setCity(event.target.value)}
-                label="City"
-                inputProps={{
-                  id: "select-multiple-native",
+        <Paper>
+          <Grid
+            item
+            xs={12}
+            md={6}
+            p={2}
+            sx={{ m: 3, width: "30ch" }}
+            justifyContent="flex-start"
+            direction="column"
+          >
+            <div>
+              <Grid>
+                <FormControl fullWidth sx={{ mb: 4, width: "25ch" }} required>
+                  <OutlinedInput
+                    id="outlined-adornment-amount"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Search by city, street etc."
+                    type="text"
+                    startAdornment={<SearchIcon position="start" />}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid sx={{ m: 0 }}>
+                <Typography>
+                  Price to:
+                  <OutlinedInput
+                    type="number"
+                    placeholder="No Limit"
+                    value={lowerPrices}
+                    onChange={(e) => setLowerPrices(e.target.value)}
+                  />
+                </Typography>
+              </Grid>
+              <FormControl
+                sx={{
+                  mt: 4,
+                  ml: 7,
+                  minWidth: 120,
+                  maxWidth: 300,
+                  width: "20ch",
                 }}
               >
-                {allArea.map((area) => (
-                  <option value={area.name}>{area.name} </option>
-                ))}
-              </Select>
-            </FormControl>
-            <Grid>
-              <Typography>Current Status</Typography>
-              <FormGroup>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      value={available}
-                      onChange={(e) => {
-                        e.target.checked
-                          ? setAvailable(true)
-                          : setAvailable(false);
-                      }}
-                    />
-                  }
-                  label="Available Areas"
-                />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      value={booked}
-                      onChange={(e) => {
-                        e.target.checked ? setBooked(true) : setBooked(false);
-                      }}
-                    />
-                  }
-                  label="Booked Areas"
-                />
-              </FormGroup>
-            </Grid>
-          </div>
-        </Grid>
+                <InputLabel shrink htmlFor="select-multiple-native">
+                  City
+                </InputLabel>
+                <Select
+                  multiple
+                  native
+                  value={city}
+                  onChange={(event) => setCity(event.target.value)}
+                  label="City"
+                  inputProps={{
+                    id: "select-multiple-native",
+                  }}
+                >
+                  {allArea.map((area) => (
+                    <option value={area.name}>{area.name} </option>
+                  ))}
+                </Select>
+              </FormControl>
+              <Grid
+                sx={{
+                  mt: 4,
+                  ml: 7,
+                  minWidth: 120,
+                  maxWidth: 300,
+                  width: "20ch",
+                }}
+              >
+                <Typography variant="h6">Current Status</Typography>
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        value={available}
+                        onChange={(e) => {
+                          e.target.checked
+                            ? setAvailable(true)
+                            : setAvailable(false);
+                        }}
+                      />
+                    }
+                    label="Available Areas"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        value={booked}
+                        onChange={(e) => {
+                          e.target.checked ? setBooked(true) : setBooked(false);
+                        }}
+                      />
+                    }
+                    label="Booked Areas"
+                  />
+                </FormGroup>
+              </Grid>
+            </div>
+          </Grid>
+        </Paper>
 
         <Grid
           sx={{ display: "flex", m: 1.5 }}
