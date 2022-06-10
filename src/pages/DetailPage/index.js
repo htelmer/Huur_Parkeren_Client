@@ -21,7 +21,14 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+import {
+  DialogTitle,
+  Paper,
+  Card,
+  Grid,
+  CardContent,
+  Box,
+} from "@mui/material";
 import CardMedia from "@mui/material/CardMedia";
 
 export default function AreaDetails() {
@@ -62,8 +69,8 @@ export default function AreaDetails() {
   }, [dispatch, id]);
 
   return (
-    <div>
-      <Breadcrumbs aria-label="breadcrumb">
+    <Box>
+      <Breadcrumbs aria-label="breadcrumb" sx={{ m: 3 }}>
         <Link underline="hover" color="inherit" href="/">
           Home
         </Link>
@@ -72,77 +79,134 @@ export default function AreaDetails() {
         </Typography>
       </Breadcrumbs>
       <div>
-        {!details || details === null ? (
-          "Loading"
-        ) : (
-          <div>
-            <h2>
-              {details.streetName} {details.houseNo}
-            </h2>
-            <h3>
-              {details.postalCode} {details.city}
-            </h3>
-            <p>{details.price}</p>
-            <img alt={details.name} src={details.image} width="200" />
-            <h3>Features:</h3>
-            <p>Price: € {details.price}/per mounth</p>
-            <p>{details.description}</p>
-            <p>Available spots: {details.availableSpots}</p>
-            <button>Send a message</button>
-            <button
-              variant="secondary"
-              style={{ borderRadius: "10px", height: "50px" }}
-              onClick={() => dispatch(setFavorites(details.id))}
-            >
-              {user?.favorites?.some((u) => u.id === details.id)
-                ? "Unsave"
-                : "Save"}{" "}
-            </button>
-            {details.bookings.length === 0 ? (
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleClickOpen}
-              >
-                Book now!
-              </Button>
-            ) : (
-              <p>
-                {" "}
-                This area is reserved till{" "}
-                {details.bookings.map((when) => when.tillWhen)}
-              </p>
-            )}
-            <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>Reservation</DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  To book for this area, please enter the end date (DD MM YYYY)
-                  of your reservation here. We will contact with you in three
-                  working days.
-                </DialogContentText>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  id="tillWhen"
-                  label="Till Date"
-                  type="date"
-                  fullWidth
-                  variant="standard"
-                  value={tillWhen}
-                  onChange={(event) => setTillWhen(event.target.value)}
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button type="submit" onClick={submit}>
-                  Book Now!
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </div>
-        )}
+        <Paper
+          item
+          xs={12}
+          md={6}
+          p={2}
+          sx={{ mx: "auto", width: 1000, flexWrap: "wrap" }}
+        >
+          {!details || details === null ? (
+            "Loading"
+          ) : (
+            <div>
+              <Card sx={{ width: 1000, display: "flex" }}>
+                <Grid>
+                  <CardMedia
+                    component="img"
+                    sx={{ width: 400, display: { sm: "block" }, m: 3 }}
+                    image={details.image}
+                    alt="img"
+                  />
+                </Grid>
+                <CardContent
+                  justifyContent="flex-end"
+                  sx={{ textAlign: "left" }}
+                >
+                  <Typography
+                    component="h2"
+                    variant="h5"
+                    sx={{ mb: 1, fontWeight: "bold", color: "#2196f3" }}
+                  >
+                    {details.streetName} {details.houseNo}
+                  </Typography>
+                  <Typography
+                    component="h4"
+                    variant="h6"
+                    sx={{ mb: 1, fontWeight: "medium" }}
+                    color="inherit"
+                  >
+                    {details.postalCode} {details.city}
+                  </Typography>
+                  <h7 style={{ opacity: 0.7 }}>
+                    <strong>Price:</strong> € {details.price}/per month
+                  </h7>
+                  <h3>Features:</h3>
+                  <p>
+                    <strong style={{ opacity: 0.7 }}>Available spots: </strong>
+                    {details.availableSpots}
+                  </p>
+
+                  {details.bookings.length === 0 && (
+                    <p style={{ opacity: 0.7 }}>
+                      {" "}
+                      <strong> Available From: </strong>
+                      details.availableStartDate.substring(0, 10)
+                    </p>
+                  )}
+
+                  {details.bookings.length === 0 && (
+                    <p style={{ opacity: 0.7 }}>
+                      {" "}
+                      <strong> Available To:</strong>
+                      details.availableEndDate.substring(0, 10)
+                    </p>
+                  )}
+
+                  <p>
+                    <strong>Description: </strong>
+                    {details.description}
+                  </p>
+                  <p>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      sx={{ display: { sm: "block" }, m: 3 }}
+                      onClick={() => dispatch(setFavorites(details.id))}
+                    >
+                      {user?.favorites?.some((u) => u.id === details.id)
+                        ? "Unsave"
+                        : "Save"}{" "}
+                    </Button>
+                    {details.bookings.length === 0 ? (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleClickOpen}
+                      >
+                        Book now!
+                      </Button>
+                    ) : (
+                      <Typography color="error">
+                        {" "}
+                        Sorry, this space is currently let by another customer
+                        till {details.bookings.map((when) => when.tillWhen)}
+                      </Typography>
+                    )}
+                    <Dialog open={open} onClose={handleClose}>
+                      <DialogTitle>Reservation</DialogTitle>
+                      <DialogContent>
+                        <DialogContentText>
+                          To book for this area, please enter the end date (DD
+                          MM YYYY) of your reservation here. We will contact
+                          with you in three working days.
+                        </DialogContentText>
+                        <TextField
+                          autoFocus
+                          margin="dense"
+                          id="tillWhen"
+                          label="Till Date"
+                          type="date"
+                          fullWidth
+                          variant="standard"
+                          value={tillWhen}
+                          onChange={(event) => setTillWhen(event.target.value)}
+                        />
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={handleClose}>Cancel</Button>
+                        <Button type="submit" onClick={submit}>
+                          Book Now!
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+        </Paper>
       </div>
-    </div>
+    </Box>
   );
 }

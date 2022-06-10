@@ -198,7 +198,7 @@ export const setFavorites = (areaId) => {
       console.log("response", response);
 
       dispatch(
-        showMessageWithTimeout("success", false, "Favorites Added", 3000)
+        showMessageWithTimeout("success", false, "Favorites Updated", 3000)
       );
       dispatch(toggleFavorites(response.data));
       dispatch(appDoneLoading());
@@ -207,3 +207,59 @@ export const setFavorites = (areaId) => {
     }
   };
 };
+
+/*export const updateMyArea = (updatedArea) => {
+  return async (dispatch, getState) => {
+    try {
+      const { token, profile } = getState().user;
+      const { id } = getState().area.areaDetails;
+      dispatch(appLoading());
+      const {
+        city,
+        postalCode,
+        streetName,
+        houseNo,
+        price,
+        latitude,
+        longtitude,
+        availableStartDate,
+        availableEndDate,
+        availableSpots,
+        description,
+        image,
+      } = updatedArea;
+
+      const response = await axios.patch(
+        `${apiUrl}/area/update/${profile?.id}/${id}`,
+        {
+          city,
+          postalCode,
+          streetName,
+          houseNo,
+          price,
+          latitude,
+          longtitude,
+          availableStartDate,
+          availableEndDate,
+          availableSpots,
+          description,
+          image,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      // console.log(response);
+
+      dispatch(
+        showMessageWithTimeout("success", false, "update successfull", 3000)
+      );
+      dispatch(areaUpdated(response.data.space));
+      dispatch(appDoneLoading());
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+};*/

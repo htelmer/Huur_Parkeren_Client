@@ -236,10 +236,12 @@ export default function Map() {
                       <Popup>
                         <img
                           alt={area.streetName}
-                          style={{ width: "100px", borderRadius: "0.5em" }}
+                          style={{ width: "150px", borderRadius: "0.5em" }}
                           src={area.image}
                         />
-                        <p>{area.streetName}</p>
+                        <p>
+                          {area.streetName}, €{area.price}
+                        </p>
                       </Popup>
                     </Marker>
                   ))

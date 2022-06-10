@@ -7,6 +7,11 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 import { removeFavorites } from "../../store/rentalAreas/actions";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Grid from "@mui/material/Grid";
 
 export default function SavedAreas() {
   const dispatch = useDispatch();
@@ -41,21 +46,50 @@ export default function SavedAreas() {
         ? user.favorites.map((fav) => {
             return (
               <div>
-                <h3>
-                  {fav.city} {fav.postalCode}
-                </h3>
-                <p>
-                  {fav.streetName} {fav.houseNo}
-                </p>
-                <img src={fav.image} width="200" />
-                <p>{fav.description}</p>
-                <Button
-                  variant="contained"
-                  color="error"
-                  onClick={() => onRemoveClick(fav.id)}
+                <Grid
+                  item
+                  xs={12}
+                  md={6}
+                  p={2}
+                  sx={{ display: "flex", m: 1.5, width: 1000 }}
+                  variant="outlined"
+                  style={{ margin: "auto" }}
                 >
-                  Remove
-                </Button>
+                  <CardActionArea component="a" href={`/area/${fav.id}`}>
+                    <Card sx={{ display: "flex" }}>
+                      <CardMedia
+                        component="img"
+                        sx={{
+                          width: 200,
+                          height: 250,
+                          display: { sm: "block" },
+                          m: 3,
+                        }}
+                        image={fav.image}
+                        alt="img"
+                      />
+                      <CardContent sx={{ flex: 1 }}>
+                        <h3>
+                          {fav.city} {fav.postalCode}
+                        </h3>
+                        <p>
+                          {fav.streetName} {fav.houseNo}
+                        </p>
+                        <p> € {fav.price}</p>
+                        <Typography sx={{ textAlign: "left" }}>
+                          {fav.description}
+                        </Typography>
+                        <Button
+                          variant="contained"
+                          color="error"
+                          onClick={() => onRemoveClick(fav.id)}
+                        >
+                          Remove
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </CardActionArea>
+                </Grid>
               </div>
             );
           })

@@ -26,74 +26,77 @@ export default function MyAccount() {
   return (
     <div>
       <h1>My account</h1>
-      <Grid item xs={12} md={6} p={2} sx={{ m: 1, width: "70ch" }}>
-        <CardActionArea
-          component={RouterLink}
-          to="/MyAccount/SavedAreas"
-          justifyContent="center"
-        >
-          <Card sx={{ display: "flex" }}>
-            <FavoriteIcon color="error" sx={{ m: 1 }} />
-            <CardContent sx={{ flex: 1 }} justifyContent="flex-end">
-              <Typography component="h2" variant="h5">
-                {" "}
-                Saved Parking Areas
-              </Typography>
-              <Typography variant="subtitle1" color="text.secondary">
-                You can view and manage the areas that you added your favorites
-              </Typography>
-              <Typography variant="subtitle1" color="primary">
-                View Details
-              </Typography>
-            </CardContent>
-          </Card>
-        </CardActionArea>
-      </Grid>
-      <Grid item xs={12} md={6} p={2} sx={{ m: 1, width: "70ch" }}>
-        <CardActionArea
-          component={RouterLink}
-          to="/MyAccount/NewParkingArea"
-          justifyContent="center"
-        >
-          <Card sx={{ display: "flex" }}>
-            <FileUploadIcon color="#2e7d32" sx={{ m: 1 }} />
-            <CardContent sx={{ flex: 1 }} justifyContent="flex-end">
-              <Typography component="h2" variant="h5">
-                {" "}
-                New Parking Area
-              </Typography>
-              <Typography variant="subtitle1" color="text.secondary">
-                If you want to rent your parking area please add it from here
-              </Typography>
-              <Typography variant="subtitle1" color="primary">
-                View Details
-              </Typography>
-            </CardContent>
-          </Card>
-        </CardActionArea>
-      </Grid>
-      <Grid item xs={12} md={6} p={2} sx={{ m: 1, width: "70ch" }}>
-        <CardActionArea
-          component={RouterLink}
-          to="/MyAccount/MyParkingArea"
-          justifyContent="center"
-        >
-          <Card sx={{ display: "flex" }}>
-            <EmojiTransportationTwoToneIcon color="primary" sx={{ m: 1 }} />
-            <CardContent sx={{ flex: 1 }} justifyContent="flex-end">
-              <Typography component="h2" variant="h5">
-                {" "}
-                My Parking Area
-              </Typography>
-              <Typography variant="subtitle1" color="text.secondary">
-                You can view and manage your own areas
-              </Typography>
-              <Typography variant="subtitle1" color="primary">
-                View Details
-              </Typography>
-            </CardContent>
-          </Card>
-        </CardActionArea>
+      <Grid sx={{ mx: 45 }}>
+        <Grid item xs={12} md={6} p={2} sx={{ m: 1, width: "70ch" }}>
+          <CardActionArea
+            component={RouterLink}
+            to="/MyAccount/SavedAreas"
+            justifyContent="center"
+          >
+            <Card sx={{ display: "flex" }}>
+              <FavoriteIcon color="error" sx={{ m: 1 }} />
+              <CardContent sx={{ flex: 1 }} justifyContent="flex-end">
+                <Typography component="h2" variant="h5">
+                  {" "}
+                  Saved Parking Areas
+                </Typography>
+                <Typography variant="subtitle1" color="text.secondary">
+                  You can view and manage the areas that you added your
+                  favorites
+                </Typography>
+                <Typography variant="subtitle1" color="primary">
+                  View Details
+                </Typography>
+              </CardContent>
+            </Card>
+          </CardActionArea>
+        </Grid>
+        <Grid item xs={12} md={6} p={2} sx={{ m: 1, width: "70ch" }}>
+          <CardActionArea
+            component={RouterLink}
+            to="/MyAccount/NewParkingArea"
+            justifyContent="center"
+          >
+            <Card sx={{ display: "flex" }}>
+              <FileUploadIcon color="#2e7d32" sx={{ m: 1 }} />
+              <CardContent sx={{ flex: 1 }} justifyContent="flex-end">
+                <Typography component="h2" variant="h5">
+                  {" "}
+                  New Parking Area
+                </Typography>
+                <Typography variant="subtitle1" color="text.secondary">
+                  If you want to rent your parking area please add it from here
+                </Typography>
+                <Typography variant="subtitle1" color="primary">
+                  View Details
+                </Typography>
+              </CardContent>
+            </Card>
+          </CardActionArea>
+        </Grid>
+        <Grid item xs={12} md={6} p={2} sx={{ m: 1, width: "70ch" }}>
+          <CardActionArea
+            component={RouterLink}
+            to="/MyAccount/MyParkingArea"
+            justifyContent="center"
+          >
+            <Card sx={{ display: "flex" }}>
+              <EmojiTransportationTwoToneIcon color="primary" sx={{ m: 1 }} />
+              <CardContent sx={{ flex: 1 }} justifyContent="flex-end">
+                <Typography component="h2" variant="h5">
+                  {" "}
+                  My Parking Area
+                </Typography>
+                <Typography variant="subtitle1" color="text.secondary">
+                  You can view and manage your own areas
+                </Typography>
+                <Typography variant="subtitle1" color="primary">
+                  View Details
+                </Typography>
+              </CardContent>
+            </Card>
+          </CardActionArea>
+        </Grid>
       </Grid>
     </div>
   );

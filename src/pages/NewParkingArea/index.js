@@ -118,7 +118,14 @@ export default function NewParkingArea() {
             {" "}
             <h1>Post Your Parking Area</h1>
           </Grid>
-          <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              marginLeft: 10,
+              marginRight: 10,
+            }}
+          >
             <TextField
               id="select-city"
               select
@@ -199,7 +206,7 @@ export default function NewParkingArea() {
               value={longtitude}
               onChange={(e) => setLongtitude(e.target.value)}
               margin="normal"
-              sx={{ m: 1, width: "25ch" }}
+              sx={{ m: 1, width: "25ch", marginRight: 30 }}
             />
             <FormControl fullWidth sx={{ m: 1, width: "35ch" }} required>
               <InputLabel htmlFor="outlined-adornment-amount">
@@ -246,12 +253,12 @@ export default function NewParkingArea() {
               onChange={(e) => setDescription(e.target.value)}
               margin="normal"
               fullWidth
-              sx={{ m: 1 }}
+              sx={{ m: 1, width: "115ch", marginRight: 10 }}
             />
             <Typography>Image</Typography>
             <input type="file" />
             <Button
-              sx={{ m: 1 }}
+              sx={{ m: 5, marginLeft: 90 }}
               variant="contained"
               size="large"
               type="submit"

@@ -16,6 +16,7 @@ import NewParkingArea from "./pages/NewParkingArea";
 import MyParkingArea from "./pages/MyParkingArea";
 import Map from "./pages/Map";
 import MessageBox from "./components/MessageBox";
+import EditParkingArea from "./pages/EditArea";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +40,10 @@ function App() {
         <Route path="/MyAccount/SavedAreas" element={<SavedAreas />} />
         <Route path="/MyAccount/NewParkingArea" element={<NewParkingArea />} />
         <Route path="/MyAccount/MyParkingArea" element={<MyParkingArea />} />
+        <Route
+          path="/MyAccount/MyParkingArea/:id"
+          element={<EditParkingArea />}
+        />
       </Routes>
     </div>
   );

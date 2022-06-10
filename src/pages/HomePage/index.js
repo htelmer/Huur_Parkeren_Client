@@ -52,7 +52,7 @@ export default function Home() {
   }, [city]);
 
   return (
-    <Grid>
+    <Grid sx={{ bgcolor: "background.paper" }}>
       <Grid
         sx={{ display: "flex", m: 1 }}
         variant="outlined"
@@ -80,7 +80,12 @@ export default function Home() {
           >
             <div>
               <Grid>
-                <FormControl fullWidth sx={{ mb: 4, width: "25ch" }} required>
+                <FormControl
+                  fullWidth
+                  sx={{ mb: 4, width: "25ch" }}
+                  required
+                  sticky
+                >
                   <OutlinedInput
                     id="outlined-adornment-amount"
                     value={search}
@@ -176,45 +181,41 @@ export default function Home() {
           style={{ marginLeft: 90 }}
         >
           <div className="display_areas">
-            <p>
-              {lPrices.length
-                ? lPrices
-                    .filter((c) => (city ? c.city === city : true))
-                    .filter(
-                      (a) =>
-                        a.streetName
-                          .toLowerCase()
-                          .includes(search.toLocaleLowerCase()) ||
-                        a.city.toLowerCase().includes(search.toLowerCase()) ||
-                        a.postalCode
-                          .toLowerCase()
-                          .includes(search.toLowerCase()) ||
-                        a.description
-                          .toLowerCase()
-                          .includes(search.toLowerCase())
-                    )
-                    .filter((avail) =>
-                      available ? avail.bookings.length === 0 : true
-                    )
-                    .filter((book) =>
-                      booked ? book.bookings.length !== 0 : true
-                    )
-                    .map((s) => (
-                      <AreaCard
-                        key={s.id}
-                        id={s.id}
-                        streetName={s.streetName}
-                        houseNo={s.houseNo}
-                        postalCode={s.postalCode}
-                        city={s.city}
-                        price={s.price}
-                        image={s.image}
-                        favorites={s.favorites}
-                        bookings={s.bookings}
-                      />
-                    ))
-                : "No areas with this conditions"}
-            </p>
+            {lPrices.length
+              ? lPrices
+                  .filter((c) => (city ? c.city === city : true))
+                  .filter(
+                    (a) =>
+                      a.streetName
+                        .toLowerCase()
+                        .includes(search.toLocaleLowerCase()) ||
+                      a.city.toLowerCase().includes(search.toLowerCase()) ||
+                      a.postalCode
+                        .toLowerCase()
+                        .includes(search.toLowerCase()) ||
+                      a.description.toLowerCase().includes(search.toLowerCase())
+                  )
+                  .filter((avail) =>
+                    available ? avail.bookings.length === 0 : true
+                  )
+                  .filter((book) =>
+                    booked ? book.bookings.length !== 0 : true
+                  )
+                  .map((s) => (
+                    <AreaCard
+                      key={s.id}
+                      id={s.id}
+                      streetName={s.streetName}
+                      houseNo={s.houseNo}
+                      postalCode={s.postalCode}
+                      city={s.city}
+                      price={s.price}
+                      image={s.image}
+                      favorites={s.favorites}
+                      bookings={s.bookings}
+                    />
+                  ))
+              : "No areas with this conditions"}
           </div>
         </Grid>
       </Paper>
