@@ -234,14 +234,17 @@ export default function Map() {
                     >
                       {/* when we click on the marker, we see the popup */}
                       <Popup>
-                        <img
-                          alt={area.streetName}
-                          style={{ width: "150px", borderRadius: "0.5em" }}
-                          src={area.image}
-                        />
-                        <p>
-                          {area.streetName}, €{area.price}
-                        </p>
+                        <Link href={`/area/${area.id}`}>
+                          {" "}
+                          <img
+                            alt={area.streetName}
+                            style={{ width: "150px", borderRadius: "0.5em" }}
+                            src={area.image}
+                          />
+                          <p>
+                            {area.streetName}, €{area.price}
+                          </p>
+                        </Link>
                       </Popup>
                     </Marker>
                   ))

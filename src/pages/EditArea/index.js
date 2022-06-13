@@ -1,77 +1,122 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchAreaById, postBooking } from "../../store/rentalAreas/actions";
+import {
+  getLoading,
+  selectAreaDetails,
+  selectAreas,
+  selectAllReducer,
+} from "../../store/rentalAreas/selectors";
 import { useParams } from "react-router-dom";
-import { selectMyAreas } from "../../store/user/selectors";
-import { selectAreaDetails } from "../../store/rentalAreas/selectors";
-//import { updateMyArea } from "../../store/user/actions";
-import { deleteArea, fetchAreaById } from "../../store/rentalAreas/actions";
+import { setFavorites, updateMyArea } from "../../store/user/actions";
 import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
-import Button from "@mui/material/Button";
-
-import Grid from "@mui/material/Grid";
+import { selectUser } from "../../store/user/selectors";
 import { selectCityFilter } from "../../store/filters/selectors";
-import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
 import { filterCities } from "../../store/filters/slice";
 
-import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputAdornment from "@mui/material/InputAdornment";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import {
+  DialogTitle,
+  Paper,
+  Card,
+  Grid,
+  CardContent,
+  Box,
+  MenuItem,
+  FormControl,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+} from "@mui/material";
+import CardMedia from "@mui/material/CardMedia";
 
-export default function EditParkingArea() {
-  const areaDetails = useSelector(selectAreaDetails);
-  const allArea = useSelector(selectCityFilter);
-  console.log("areaDetails", areaDetails);
+export default function AreaDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const loading = useSelector(getLoading);
+  const details = useSelector(selectAreaDetails);
+  const areas = useSelector(selectAreas);
+  const user = useSelector(selectUser);
+
+  console.log("areas", areas);
+  const reducer = useSelector(selectAllReducer);
+  console.log("reducer?", reducer);
+  //const { userId } = user?.id;
+
+  console.log("details??", details);
   useEffect(() => {
     dispatch(fetchAreaById(id));
   }, [dispatch, id]);
-  const ownerId = areaDetails.ownerId;
-  const [city, setCity] = useState(areaDetails.city);
-  const [postalCode, setPostalCode] = useState(areaDetails.postalCode);
-  const [streetName, setStreetName] = useState(areaDetails.streetName);
-  const [houseNo, setHouseNo] = useState(areaDetails.houseNo);
-  const [price, setPrice] = useState(areaDetails.price);
-  const [latitude, setLatitude] = useState(areaDetails.latitude);
-  const [longtitude, setLongtitude] = useState(areaDetails.longtitude);
+  const [city, setCity] = useState(details.city);
+  const [postalCode, setPostalCode] = useState(details.postalCode);
+  const [streetName, setStreetName] = useState(details.streetName);
+  const [houseNo, setHouseNo] = useState(details.houseNo);
+  const [price, setPrice] = useState(details.price);
+  const [latitude, setLatitude] = useState(details.latitude);
+  const [longtitude, setLongtitude] = useState(details.longtitude);
   const [availableStartDate, setAvailableStartDate] = useState(
-    areaDetails.availableStartDate
+    details.availableStartDate
   );
   const [availableEndDate, setAvailableEndDate] = useState(
-    areaDetails.availableEndDate
+    details.availableEndDate
   );
   const [availableSpots, setAvailableSpots] = useState(
-    areaDetails.availableSpots
+    details.setAvailableSpots
   );
-  const [description, setDescription] = useState(areaDetails.description);
-  const [image, setImage] = useState(areaDetails.image);
-  /* function submit(event) {
-    dispatch(
-      updateMyArea(
-        city,
-        postalCode,
-        streetName,
-        houseNo,
-        price,
-        latitude,
-        longtitude,
-        availableStartDate,
-        availableEndDate,
-        availableSpots,
-        description,
-        image
-      )
+  const [description, setDescription] = useState(details.description);
+  const [image, setImage] = useState(details.image);
+
+  const allArea = useSelector(selectCityFilter);
+  useEffect(() => {
+    dispatch(filterCities);
+  }, [dispatch]);
+
+  const uploadImage = async (e) => {
+    const files = e.target.files;
+    const data = new FormData();
+    data.append("file", files[0]);
+    data.append("upload_preset", "ieyzmdtf");
+    console.log("main", files);
+
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/dk3j2476r/image/upload",
+      {
+        method: "POST",
+        body: data,
+      }
     );
-  }*/
+    const file = await res.json();
+    console.log(file);
+    setImage(file.url);
+  };
+  const submit = (event) => {
+    const updatedArea = {
+      city,
+      postalCode,
+      streetName,
+      houseNo,
+      price,
+      latitude,
+      longtitude,
+      availableStartDate,
+      availableEndDate,
+      availableSpots,
+      description,
+      image,
+    };
+    dispatch(updateMyArea(updatedArea));
+  };
+
   return (
-    <div>
+    <Box>
       <Breadcrumbs aria-label="breadcrumb" sx={{ m: 3 }}>
         <Link underline="hover" color="inherit" href="/">
           Home
@@ -79,15 +124,26 @@ export default function EditParkingArea() {
         <Link underline="hover" color="inherit" href="/myAccount">
           My Account
         </Link>
-
-        <Typography color="text.primary">New Parking Area</Typography>
+        <Link underline="hover" color="inherit" href="/myAccount/myParkingArea">
+          My Parking Area
+        </Link>
+        <Typography color="text.primary">
+          Update of {details.streetName}, {details.houseNo}
+        </Typography>
       </Breadcrumbs>
-      <div>
-        <Grid align="center">
-          {" "}
-          <h1>Update Your Parking Area</h1>
-        </Grid>
-        <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+      <Grid align="center">
+        {" "}
+        <h1>Update Your Parking Area</h1>
+      </Grid>
+      <form onSubmit={submit} autoComplete="off">
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            marginLeft: 10,
+            marginRight: 10,
+          }}
+        >
           <TextField
             id="select-city"
             select
@@ -168,7 +224,7 @@ export default function EditParkingArea() {
             value={longtitude}
             onChange={(e) => setLongtitude(e.target.value)}
             margin="normal"
-            sx={{ m: 1, width: "25ch" }}
+            sx={{ m: 1, width: "25ch", marginRight: 30 }}
           />
           <FormControl fullWidth sx={{ m: 1, width: "35ch" }} required>
             <InputLabel htmlFor="outlined-adornment-amount">
@@ -215,16 +271,21 @@ export default function EditParkingArea() {
             onChange={(e) => setDescription(e.target.value)}
             margin="normal"
             fullWidth
-            sx={{ m: 1 }}
+            sx={{ m: 1, width: "115ch", marginRight: 10 }}
           />
           <Typography>Image</Typography>
           <input type="file" />
-          <Button sx={{ m: 1 }} variant="contained" size="large" type="submit">
+          <Button
+            sx={{ m: 5, marginLeft: 90 }}
+            variant="contained"
+            size="large"
+            type="submit"
+          >
             {" "}
             Submit{" "}
           </Button>
         </Box>
-      </div>
-    </div>
+      </form>
+    </Box>
   );
 }

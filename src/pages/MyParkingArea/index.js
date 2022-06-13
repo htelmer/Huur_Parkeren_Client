@@ -77,6 +77,9 @@ export default function MyParkingArea() {
                         >
                           Delete
                         </Button>
+                        <Button href={`/MyAccount/MyParkingArea/${own.id}`}>
+                          Update
+                        </Button>
                       </CardContent>
                     </Card>
                   </CardActionArea>

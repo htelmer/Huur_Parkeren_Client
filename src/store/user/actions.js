@@ -5,7 +5,7 @@ import { appLoading, appDoneLoading, setMessage } from "../appState/slice";
 import { showMessageWithTimeout } from "../appState/actions";
 import { loginSuccess, logOut, tokenStillValid } from "./slice";
 import { selectAreaDetails } from "../rentalAreas/selectors";
-import { toggleFavorites } from "../user/slice";
+import { toggleFavorites, areaUpdated } from "../user/slice";
 
 export const signUp = (firstName, lastName, email, password, phone) => {
   return async (dispatch, getState) => {
@@ -208,7 +208,7 @@ export const setFavorites = (areaId) => {
   };
 };
 
-/*export const updateMyArea = (updatedArea) => {
+export const updateMyArea = (updatedArea, id) => {
   return async (dispatch, getState) => {
     try {
       const { token, profile } = getState().user;
@@ -230,7 +230,7 @@ export const setFavorites = (areaId) => {
       } = updatedArea;
 
       const response = await axios.patch(
-        `${apiUrl}/area/update/${profile?.id}/${id}`,
+        `${apiUrl}/area/update/${profile?.id}`,
         {
           city,
           postalCode,
@@ -256,10 +256,10 @@ export const setFavorites = (areaId) => {
       dispatch(
         showMessageWithTimeout("success", false, "update successfull", 3000)
       );
-      dispatch(areaUpdated(response.data.space));
+      dispatch(areaUpdated(response.data));
       dispatch(appDoneLoading());
     } catch (e) {
       console.log(e.message);
     }
   };
-};*/
+};

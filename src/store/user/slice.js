@@ -45,7 +45,7 @@ export const userSlice = createSlice({
       state.profile.owner = deleteArea;
     },
 
-    /* areaUpdated: (state, action) => {
+    areaUpdated: (state, action) => {
       const areaId = action.payload.areaId;
       const updateArea = state.profile?.owner.map((a) => {
         if (a.id !== areaId) {
@@ -54,7 +54,7 @@ export const userSlice = createSlice({
           return { ...action.payload, owner: [...updateArea] };
         }
       });
-    },*/
+    },
     removeFavsSuccess: (state, action) => {
       const favId = action.payload;
       const removeFavs = state.profile?.favorites.filter(
@@ -73,6 +73,7 @@ export const {
   toggleFavorites,
   areaDeleteSuccess,
   removeFavsSuccess,
+  areaUpdated,
 } = userSlice.actions;
 
 export default userSlice.reducer;
