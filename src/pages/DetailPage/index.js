@@ -131,7 +131,7 @@ export default function AreaDetails() {
                     <p style={{ opacity: 0.7 }}>
                       {" "}
                       <strong> Available From: </strong>
-                      details.availableStartDate.substring(0, 10)
+                      {details.availableStartDate.substring(0, 10)}
                     </p>
                   )}
 
@@ -139,7 +139,7 @@ export default function AreaDetails() {
                     <p style={{ opacity: 0.7 }}>
                       {" "}
                       <strong> Available To:</strong>
-                      details.availableEndDate.substring(0, 10)
+                      {details.availableEndDate.substring(0, 10)}
                     </p>
                   )}
 
