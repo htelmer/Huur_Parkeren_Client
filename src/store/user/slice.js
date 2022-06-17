@@ -46,14 +46,15 @@ export const userSlice = createSlice({
     },
 
     areaUpdated: (state, action) => {
-      const areaId = action.payload.areaId;
-      const updateArea = state.profile?.owner.map((a) => {
+      const areaId = action.payload.id;
+      const updatedAreas = state.profile?.owner.map((a) => {
         if (a.id !== areaId) {
-          return areaId;
+          return a;
         } else {
-          return { ...action.payload, owner: [...updateArea] };
+          return { ...action.payload };
         }
       });
+      state.profile.owner = updatedAreas;
     },
     removeFavsSuccess: (state, action) => {
       const favId = action.payload;

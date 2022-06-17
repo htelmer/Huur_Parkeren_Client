@@ -7,12 +7,12 @@ import {
   selectAreas,
   selectAllReducer,
 } from "../../store/rentalAreas/selectors";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { setFavorites, updateMyArea } from "../../store/user/actions";
 import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
-import { selectUser } from "../../store/user/selectors";
+import { selectUser, selectMyArea } from "../../store/user/selectors";
 import { selectCityFilter } from "../../store/filters/selectors";
 import { filterCities } from "../../store/filters/slice";
 
@@ -38,43 +38,38 @@ import {
 } from "@mui/material";
 import CardMedia from "@mui/material/CardMedia";
 
-export default function AreaDetails() {
+export default function EditParkingArea() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const loading = useSelector(getLoading);
-  const details = useSelector(selectAreaDetails);
+  const myArea = useSelector(selectMyArea(parseInt(id)));
   const areas = useSelector(selectAreas);
-  const user = useSelector(selectUser);
-
+  const details = useSelector(selectAreaDetails);
   console.log("areas", areas);
   const reducer = useSelector(selectAllReducer);
   console.log("reducer?", reducer);
   //const { userId } = user?.id;
 
-  console.log("details??", details);
-  useEffect(() => {
-    dispatch(fetchAreaById(id));
-  }, [dispatch, id]);
-  const [city, setCity] = useState(details.city);
-  const [postalCode, setPostalCode] = useState(details.postalCode);
-  const [streetName, setStreetName] = useState(details.streetName);
-  const [houseNo, setHouseNo] = useState(details.houseNo);
-  const [price, setPrice] = useState(details.price);
-  const [latitude, setLatitude] = useState(details.latitude);
-  const [longtitude, setLongtitude] = useState(details.longtitude);
+  const navigate = useNavigate();
+
+  const [city, setCity] = useState(myArea.city);
+  const [postalCode, setPostalCode] = useState(myArea.postalCode);
+  const [streetName, setStreetName] = useState(myArea.streetName);
+  const [houseNo, setHouseNo] = useState(myArea.houseNo);
+  const [price, setPrice] = useState(myArea.price);
+  const [latitude, setLatitude] = useState(myArea.latitude);
+  const [longtitude, setLongtitude] = useState(myArea.longtitude);
   const [availableStartDate, setAvailableStartDate] = useState(
-    details.availableStartDate
+    myArea.availableStartDate.substring(0, 10)
   );
   const [availableEndDate, setAvailableEndDate] = useState(
-    details.availableEndDate
+    myArea?.availableEndDate.substring(0, 10)
   );
-  const [availableSpots, setAvailableSpots] = useState(
-    details.setAvailableSpots
-  );
-  const [description, setDescription] = useState(details.description);
-  const [image, setImage] = useState(details.image);
+  const [availableSpots, setAvailableSpots] = useState(myArea.availableSpots);
+  const [description, setDescription] = useState(myArea.description);
+  const [image, setImage] = useState(myArea.image);
 
   const allArea = useSelector(selectCityFilter);
+  useEffect(() => {}, [myArea]);
   useEffect(() => {
     dispatch(filterCities);
   }, [dispatch]);
@@ -83,7 +78,7 @@ export default function AreaDetails() {
     const files = e.target.files;
     const data = new FormData();
     data.append("file", files[0]);
-    data.append("upload_preset", "ieyzmdtf");
+    data.append("upload_preset", "ml_default");
     console.log("main", files);
 
     const res = await fetch(
@@ -98,6 +93,7 @@ export default function AreaDetails() {
     setImage(file.url);
   };
   const submit = (event) => {
+    event.preventDefault();
     const updatedArea = {
       city,
       postalCode,
@@ -112,7 +108,7 @@ export default function AreaDetails() {
       description,
       image,
     };
-    dispatch(updateMyArea(updatedArea));
+    dispatch(updateMyArea(updatedArea, id, navigate));
   };
 
   return (
@@ -127,13 +123,11 @@ export default function AreaDetails() {
         <Link underline="hover" color="inherit" href="/myAccount/myParkingArea">
           My Parking Area
         </Link>
-        <Typography color="text.primary">
-          Update of {details.streetName}, {details.houseNo}
-        </Typography>
+        <Typography color="text.primary">Update Your Area</Typography>
       </Breadcrumbs>
       <Grid align="center">
         {" "}
-        <h1>Update Your Parking Area</h1>
+        <h1>Update Your Parking Area </h1>
       </Grid>
       <form onSubmit={submit} autoComplete="off">
         <Box
@@ -148,16 +142,10 @@ export default function AreaDetails() {
             id="select-city"
             select
             value={city}
-            onChange={(event) => setCity(event.target.value)}
+            onChange={(e) => setCity(e.target.value)}
             sx={{ m: 1, width: "25ch" }}
             margin="normal"
             required
-            className={city.textField}
-            SelectProps={{
-              MenuProps: {
-                className: city.menu,
-              },
-            }}
             label="Select City"
           >
             {allArea.map((area) => (
@@ -274,7 +262,7 @@ export default function AreaDetails() {
             sx={{ m: 1, width: "115ch", marginRight: 10 }}
           />
           <Typography>Image</Typography>
-          <input type="file" />
+          <input type="file" onChange={uploadImage} />
           <Button
             sx={{ m: 5, marginLeft: 90 }}
             variant="contained"

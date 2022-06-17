@@ -120,30 +120,13 @@ export const getUserWithStoredToken = () => {
     }
   };
 };
-export const postNewArea = (newArea) => async (dispatch, getState) => {
-  console.log("newArea", newArea);
-  try {
-    const token = selectToken(getState());
-    console.log("token", token);
-    const {
-      city,
-      postalCode,
-      streetName,
-      houseNo,
-      price,
-      latitude,
-      longtitude,
-      availableStartDate,
-      availableEndDate,
-      availableSpots,
-      description,
-      image,
-    } = newArea;
-    console.log();
-    dispatch(appLoading());
-    const response = await axios.post(
-      `${apiUrl}/area/newArea`,
-      {
+export const postNewArea =
+  (newArea, navigate) => async (dispatch, getState) => {
+    console.log("newArea", newArea);
+    try {
+      const token = selectToken(getState());
+      console.log("token", token);
+      const {
         city,
         postalCode,
         streetName,
@@ -156,26 +139,45 @@ export const postNewArea = (newArea) => async (dispatch, getState) => {
         availableSpots,
         description,
         image,
-      },
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    );
-    //dispatch(areaPostedSuccess(response.data));
-    dispatch(
-      showMessageWithTimeout(
-        "success",
-        false,
-        "Area is posted successfully!!",
-        1500
-      )
-    );
-    dispatch(appDoneLoading());
-  } catch (error) {
-    console.log(error.message);
-    dispatch(appDoneLoading());
-  }
-};
+      } = newArea;
+      console.log();
+      dispatch(appLoading());
+      const response = await axios.post(
+        `${apiUrl}/area/newArea`,
+        {
+          city,
+          postalCode,
+          streetName,
+          houseNo,
+          price,
+          latitude,
+          longtitude,
+          availableStartDate,
+          availableEndDate,
+          availableSpots,
+          description,
+          image,
+        },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      //dispatch(areaPostedSuccess(response.data));
+      dispatch(
+        showMessageWithTimeout(
+          "success",
+          false,
+          "Area is posted successfully!!",
+          1500
+        )
+      );
+      dispatch(appDoneLoading());
+      navigate("/MyAccount/MyParkingArea");
+    } catch (error) {
+      console.log(error.message);
+      dispatch(appDoneLoading());
+    }
+  };
 export const setFavorites = (areaId) => {
   return async (dispatch, getState) => {
     try {
@@ -208,11 +210,11 @@ export const setFavorites = (areaId) => {
   };
 };
 
-export const updateMyArea = (updatedArea, id) => {
+export const updateMyArea = (updatedArea, id, navigate) => {
   return async (dispatch, getState) => {
     try {
       const { token, profile } = getState().user;
-      const { id } = getState().area.areaDetails;
+      console.log("token, profile", token, profile);
       dispatch(appLoading());
       const {
         city,
@@ -230,7 +232,7 @@ export const updateMyArea = (updatedArea, id) => {
       } = updatedArea;
 
       const response = await axios.patch(
-        `${apiUrl}/area/update/${profile?.id}`,
+        `${apiUrl}/area/update/${id}`,
         {
           city,
           postalCode,
@@ -256,8 +258,9 @@ export const updateMyArea = (updatedArea, id) => {
       dispatch(
         showMessageWithTimeout("success", false, "update successfull", 3000)
       );
-      dispatch(areaUpdated(response.data));
+      dispatch(areaUpdated(response.data.updatedArea));
       dispatch(appDoneLoading());
+      navigate("/MyAccount/MyParkingArea");
     } catch (e) {
       console.log(e.message);
     }

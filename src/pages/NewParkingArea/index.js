@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { postNewArea } from "../../store/user/actions";
 import { filterCities } from "../../store/filters/slice";
 import { selectCityFilter } from "../../store/filters/selectors";
@@ -40,11 +41,13 @@ export default function NewParkingArea() {
     dispatch(filterCities);
   }, [dispatch]);
 
+  const navigate = useNavigate();
   const uploadImage = async (e) => {
+    console.log("I am in uploadImage");
     const files = e.target.files;
     const data = new FormData();
     data.append("file", files[0]);
-    data.append("upload_preset", "ieyzmdtf");
+    data.append("upload_preset", "ml_default");
     console.log("main", files);
 
     const res = await fetch(
@@ -74,7 +77,7 @@ export default function NewParkingArea() {
       description,
       image,
     };
-    dispatch(postNewArea(newArea));
+    dispatch(postNewArea(newArea, navigate));
     setCity("");
     setPostalCode("");
     setStreetName("");
@@ -256,7 +259,7 @@ export default function NewParkingArea() {
               sx={{ m: 1, width: "115ch", marginRight: 10 }}
             />
             <Typography>Image</Typography>
-            <input type="file" />
+            <input type="file" onChange={uploadImage} />
             <Button
               sx={{ m: 5, marginLeft: 90 }}
               variant="contained"

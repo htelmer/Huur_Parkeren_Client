@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 import { selectMyAreas } from "../../store/user/selectors";
 import { deleteArea } from "../../store/rentalAreas/actions";
 import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Link from "@mui/material/Link";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
@@ -20,13 +21,20 @@ export default function MyParkingArea() {
     dispatch(deleteArea(id));
   };
 
+  const StyledLink = styled(Link)`
+    color: Blue;
+    text-decoration: none;
+    margin: 1rem;
+    position: relative;
+  `;
+
   return (
     <div>
       <Breadcrumbs aria-label="breadcrumb" sx={{ m: 3 }}>
-        <Link underline="hover" color="inherit" href="/">
+        <Link underline="hover" color="inherit" to="/">
           Home
         </Link>
-        <Link underline="hover" color="inherit" href="/myAccount">
+        <Link underline="hover" color="inherit" to="/myAccount">
           My Account
         </Link>
         <Typography color="text.primary">My Parking Area</Typography>
@@ -46,7 +54,7 @@ export default function MyParkingArea() {
                   variant="outlined"
                   style={{ margin: "auto" }}
                 >
-                  <CardActionArea component="a" href={`/area/${own.id}`}>
+                  <CardActionArea component="a">
                     <Card sx={{ display: "flex" }}>
                       <CardMedia
                         component="img"
@@ -77,9 +85,9 @@ export default function MyParkingArea() {
                         >
                           Delete
                         </Button>
-                        <Button href={`/MyAccount/MyParkingArea/${own.id}`}>
+                        <StyledLink to={`/MyAccount/MyParkingArea/${own.id}`}>
                           Update
-                        </Button>
+                        </StyledLink>
                       </CardContent>
                     </Card>
                   </CardActionArea>

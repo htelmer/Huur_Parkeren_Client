@@ -55,7 +55,7 @@ export default function SavedAreas() {
                   variant="outlined"
                   style={{ margin: "auto" }}
                 >
-                  <CardActionArea component="a" href={`/area/${fav.id}`}>
+                  <CardActionArea>
                     <Card sx={{ display: "flex" }}>
                       <CardMedia
                         component="img"
@@ -69,9 +69,12 @@ export default function SavedAreas() {
                         alt="img"
                       />
                       <CardContent sx={{ flex: 1 }}>
-                        <h3>
-                          {fav.city} {fav.postalCode}
-                        </h3>
+                        <Link href={`/area/${fav.id}`}>
+                          {" "}
+                          <h3>
+                            {fav.city} {fav.postalCode}
+                          </h3>
+                        </Link>
                         <p>
                           {fav.streetName} {fav.houseNo}
                         </p>

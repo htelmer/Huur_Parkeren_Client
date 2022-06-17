@@ -13,9 +13,7 @@ import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import { selectUser } from "../../store/user/selectors";
-
 import Button from "@mui/material/Button";
-
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -147,6 +145,7 @@ export default function AreaDetails() {
                     <strong>Description: </strong>
                     {details.description}
                   </p>
+
                   <p>
                     <Button
                       variant="contained"
